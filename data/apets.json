@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Bolota",
+    "shape": "circle",
+    "color": "#FFAA33",
+    "eyes": "round",
+    "mouth": "smile",
+    "accessories": ["hat_pirate"]
+  }
+]

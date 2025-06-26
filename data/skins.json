@@ -1,0 +1,11 @@
+
+{
+  "hat_pirate": {
+    "name": "Chapéu Pirata",
+    "image": "assets/images/hat_pirate.png"
+  },
+  "glasses_star": {
+    "name": "Óculos Estrela",
+    "image": "assets/images/glasses_star.png"
+  }
+}

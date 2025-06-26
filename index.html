@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>A-pets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- <h1 id="titulo">Treine seu Agente</h1> -->
+
+  <main>
+     <!-- Indicador de carregamento -->
+    <div id="loading">
+      <p>Carregando, por favor aguarde...</p>
+    </div>
+
+    <!-- Interface principal (escondida inicialmente) -->
+    <div id="main" >
+      <div id="simContainer">
+        <!-- O canvas será criado e inserido aqui pelo p5.js -->
+      </div>
+      <div id="controls" style="display: none;">
+        <!-- Entrada de instrução -->
+        <div id="instrucao" class="control-box" style="display: block;">
+          <label for="inputInstrucao">Instrução:</label>
+          <input type="text" id="inputInstrucao" maxlength="50" placeholder="Digite uma instrução...">
+          <button onclick="enviarInstrucao()">Enviar</button>
+        </div>
+
+        <!-- botões de reforçamento e punição -->
+        <div id="botoesReP" class="control-box horizontal">
+          <!-- tentar fazer usando codigo pyodide sincrono -->
+          <!-- tentar fazer indicando no metodo consequence a quantidade de reforco -->
+          <button onclick="Reflect.get(agent, 'reforcar')(5); console.log('reforçado' + Reflect.get(agent, '_antecedentes_e_respostas'))">Recompensa!</button>
+          <button onclick="Reflect.get(agent, 'reforcar')(-3);">Punição!</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão de início (escondido até carregar) -->
+    <div id="setAgent" style="text-align: center; margin-top: 1em; display: none;">
+      <label for="agentColor">Cor do agente:</label>
+      <input type="color" id="agentColor" name="agentColor" value="#5690E6">
+
+      <br><br>
+
+      <label for="agentName">Nome do agente:</label>
+      <input type="text" id="agentName" name="agentName" placeholder="Digite um nome">
+
+      <br><br>
+
+      <button id="startBtn" onclick="setInitialConditionsAndStart();">
+        🚀 Iniciar 
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Scripts externos: carregam primeiro -->
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+
+  <!-- Seu código -->
+  <script>
+    async function init() {
+      const pyodide = await loadPyodide();
+      await pyodide.loadPackage("micropip")
+
+      try {
+        const code = `
+import micropip
+await micropip.install("behavioralflow")
+import time
+from behavioralflow.core import Aprendente
+
+PASSOS_POR_SEGUNDO = 20  # 1 segundo = 20 passos (com loop de 0.05s)
+
+WIDTH = 400
+HEIGHT = 400
+
+responses = {("cima",):[0,6],
+             ("baixo",):[0,6],
+             ("esq",):[0,6],
+             ("dir",):[0,6],
+             ("parado",):[0,6]}
+
+class Agents(Aprendente):
+    def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, angle = 0, color="#000000", name = ""):
+        super().__init__(acoes, variar, prob_variacao)
+        self.positionX = positionX
+        self.positionY = positionY
+        #self.angle = angle # servia para definir para onde o agente está 'virado'
+        self.passos_restantes = 0
+        self.color = color
+        self.circle_color = "#ffffff"
+        self.previousPositionX = positionX
+        self.previousPositionY = positionY
+        self.name = name
+        self.antecedente_atual = ("sem contexto",)
+    
+    #def set_context(self):
+        #context = ("sem contexto",)
+        #return context
+
+    # Executa as ações
+    def to_respond(self, context):
+        if self.passos_restantes == 0:
+            self.circle_color = "#FFFFFF"
+            self.proxima_acao(context)
+            self.passos_restantes = PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2) # 1seg e meio por ação
+            print(self._acao_atual)
+
+        # Executa a ação atual
+        if self._acao_atual[0] == "cima":
+            self.positionY = (self.positionY - 1) % HEIGHT
+        
+        elif self._acao_atual[0] == "baixo":
+            self.positionY = (self.positionY + 1) % HEIGHT
+        
+        elif self._acao_atual[0] == "esq":
+            self.positionX = (self.positionX - 1) % WIDTH
+        
+        elif self._acao_atual[0] == "dir":
+            self.positionX = (self.positionX + 1) % WIDTH
+        
+        elif self._acao_atual[0] == "parado":
+            self.positionX += 0
+            self.positionY += 0
+        
+        #diminue um passo
+        self.passos_restantes -= 1
+    
+    def set_consequence(self):
+      pass
+
+
+# Loop de simulação
+def simular_em_loop():
+    for agent in agents:
+        agent.previousPositionY = agent.positionY
+        agent.previousPositionX = agent.positionX
+        #context = agent.set_context()
+        agent.to_respond(agent.antecedente_atual)
+        agent.set_consequence()
+    #time.sleep(1/PASSOS_POR_SEGUNDO)  # PASSOS_POR_SEGUNDO = 20, logo 50ms por passo
+
+        `;
+        await pyodide.runPythonAsync(code);
+
+      } catch (err) {
+        console.error("Erro ao rodar código Python:", err);
+      }
+      // Torna acessível no escopo global
+      window.pyodide = pyodide;
+
+      // Tudo carregado — esconder "Carregando..." e mostrar botão de iniciar
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("setAgent").style.display = "block";
+    }
+
+    init();
+
+  </script>
+
+  <script src="sketch.js"></script>
+  <script src="apets.js"></script>
+  
+</body>
+</html>
