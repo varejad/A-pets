@@ -98,6 +98,12 @@ function setup() {
 function draw() {
   background(255);
 
+   // Se não tiver agentes ainda, espere
+  if (!agent || agent.length === 0) {
+    return;
+  }
+drawAPet(agent, canvaWidth/2, canvaHeight/2);
+
   // drawAPet({
   //   shape: "circle",
   //   color: "#6ec1e4",
