@@ -36,10 +36,10 @@ function drawAPet(petData, x, y) {
 }
 
   // Desenhar rosto
-  // drawEyes(petData.eyes || "round");
-  // drawMouth(petData.mouth || "smile");
-  drawEyes("round");
-  drawMouth("smile");
+  drawEyes(petData, petData.eyes || "round");
+  drawMouth(petData, petData.mouth || "smile");
+  //drawEyes("round");
+  //drawMouth("smile");
 
   // Acessórios
   // if (petData.accessories && accessoryImages) {
@@ -56,8 +56,10 @@ function drawAPet(petData, x, y) {
 }
 
 // Desenha olhos simples
-function drawEyes(type) {
+function drawEyes(petData) {
   fill(petData.eyeColor || "#cccccc");
+
+  type = petData.eyes || "round";
   if (type === "round") {
     ellipse(-10, -10, 8, 8);
     ellipse(10, -10, 8, 8);
@@ -75,11 +77,12 @@ function drawEyes(type) {
 }
 
 // Desenha bocas simples
-function drawMouth(type) {
+function drawMouth(petData) {
   fill(petData.mouthColor || "#cccccc");
   stroke(0);
   strokeWeight(2);
 
+  type = petData.mouth || "smile";
   if (type === "smile") {
     arc(0, 10, 20, 10, 0, PI);
   } else if (type === "sad") {
