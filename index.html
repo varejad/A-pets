@@ -33,6 +33,22 @@
         <br><br>
         <button onclick="criarAPet()">Criar</button>
       </div>
+
+      <div id="controls" style="display: none;">
+        <!-- Entrada de instrução -->
+        <div id="instrucao">
+          <label for="inputInstrucao">Instrução:</label>
+          <input type="text" id="inputInstrucao" maxlength="50" placeholder="Digite uma instrução...">
+          <button onclick="enviarInstrucao()">Enviar</button>
+        </div>
+        <!-- botões de reforçamento e punição -->
+        <div id="botoesReP">
+          <!-- tentar fazer usando codigo pyodide sincrono -->
+          <!-- tentar fazer indicando no metodo consequence a quantidade de reforco -->
+          <button onclick="Reflect.get(agent, 'reforcar')(5);">Recompensa!</button>
+          <button onclick="Reflect.get(agent, 'reforcar')(-3);">Punição!</button>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -58,11 +74,12 @@ PASSOS_POR_SEGUNDO = 20  # 1 segundo = 20 passos (com loop de 0.05s)
 WIDTH = 400
 HEIGHT = 400
 
-responses = {("pular",):[0,6],
-             ("pegar",):[0,6],
-             ("esq",):[0,6],
-             ("dir",):[0,6],
-             ("parado",):[0,6]}
+responses = {("pular",):[0,60],
+             ("pegar",):[0,1],
+             ("esq",):[0,1],
+             ("dir",):[0,1],
+             ("entrar",):[0,1],
+             ("parado",):[0,1]}
 
 class Agents(Aprendente):
     def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, color="#000000", name = "", shape = "square", eyeColor="black", mouthColor="black"):
@@ -82,9 +99,23 @@ class Agents(Aprendente):
     #def set_context(self):
         #context = ("sem contexto",)
         #return context
-
-    # Executa as ações
+    
+    # Tentar executar as açoes
     def to_respond(self, context):
+
+        print(self._acao_atual[0])
+        # Executa a ação atual
+        if self._acao_atual[0] == "pular":
+          for i in range(10):
+            self.positionY = (self.positionY - 1) % HEIGHT
+            #time.sleep(1/PASSOS_POR_SEGUNDO)  # PASSOS_POR_SEGUNDO = 20, logo 50ms por passo
+          for i in range(10):
+            self.positionY = (self.positionY - 1) % HEIGHT
+            #time.sleep(1/PASSOS_POR_SEGUNDO)  # PASSOS_POR_SEGUNDO = 20, logo 50ms por passo
+            print(self._acao_atual[0])
+    
+    # Executa as ações
+    def to_responde(self, context):
         if self.passos_restantes == 0:
             self.circle_color = "#FFFFFF"
             self.proxima_acao(context)
@@ -92,21 +123,8 @@ class Agents(Aprendente):
             print(self._acao_atual)
 
         # Executa a ação atual
-        if self._acao_atual[0] == "cima":
+        if self._acao_atual[0] == "pular":
             self.positionY = (self.positionY - 1) % HEIGHT
-        
-        elif self._acao_atual[0] == "baixo":
-            self.positionY = (self.positionY + 1) % HEIGHT
-        
-        elif self._acao_atual[0] == "esq":
-            self.positionX = (self.positionX - 1) % WIDTH
-        
-        elif self._acao_atual[0] == "dir":
-            self.positionX = (self.positionX + 1) % WIDTH
-        
-        elif self._acao_atual[0] == "parado":
-            self.positionX += 0
-            self.positionY += 0
         
         #diminue um passo
         self.passos_restantes -= 1
@@ -119,6 +137,7 @@ class Agents(Aprendente):
 def simular_em_loop():
   agentAPet.previousPositionY = agentAPet.positionY
   agentAPet.previousPositionX = agentAPet.positionX
+  agentAPet.proxima_acao(agentAPet.antecedente_atual)
   #context = agentAPet.set_context()
   agentAPet.to_respond(agentAPet.antecedente_atual)
   agentAPet.set_consequence()

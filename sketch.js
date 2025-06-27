@@ -30,18 +30,19 @@ function criarAPet() {
   pyodide.globals.set("WIDTH", canvaWidth); // atualiza variáveis python
   pyodide.globals.set("HEIGHT", canvaHeight);
   //document.getElementById("customizacao").style.display = "none";   // esconde a div de customização
+  document.getElementById("controls").style.display = "block";
 
   loopAPet();
 }
 
 function loopAPet() {
-  //const start = performance.now();
+  const start = performance.now();
   pyodide.runPython("simular_em_loop()")
   
-  //const end = performance.now();
-  //console.log(`Execução do passo: ${Math.round(end - start)} ms`);
+  const end = performance.now();
+  console.log(`Execução do passo: ${Math.round(end - start)} ms`);
 
-  setTimeout(loopAPet, 20);
+  //setTimeout(loopAPet, 20);
 }
 
 async function updateAgentsFromPyodide() {
