@@ -1,6 +1,4 @@
 let skinsData;
-
-let agents = []
 let agent;
 let canvaWidth;
 let canvaHeight;
@@ -29,32 +27,21 @@ function criarAPet() {
                        mouthColor="${corBoca}")`);
       
   agent = pyodide.globals.get("agentAPet")
-  console.log(agent.color + "\n-----------\n" + Reflect.get(agent))
-  drawAPet(agent, canvaWidth/2, canvaHeight/2);
+  pyodide.globals.set("WIDTH", canvaWidth); // atualiza variáveis python
+  pyodide.globals.set("HEIGHT", canvaHeight);
+  //document.getElementById("customizacao").style.display = "none";   // esconde a div de customização
+
+  loopAPet();
 }
 
+function loopAPet() {
+  //const start = performance.now();
+  pyodide.runPython("simular_em_loop()")
+  
+  //const end = performance.now();
+  //console.log(`Execução do passo: ${Math.round(end - start)} ms`);
 
-async function setInitialConditionsAndStart() {
-  const selectedColor = document.getElementById("agentColor").value;
-  const agentName = document.getElementById("agentName").value || "Sem nome";
-  // Passa os valores do JS para variáveis globais no Python
-  pyodide.globals.set("js_color", selectedColor);
-  pyodide.globals.set("js_name", agentName);
-
-  // Agora usa essas variáveis no código Python
-  await pyodide.runPythonAsync(`
-    agents = [
-      Agents(responses, prob_variacao=0.0, positionX=50, positionY=50, color=js_color, name=js_name),
-    ]
-  `);
-  agent = pyodide.globals.get("agents").get(0);
-  pyodide.globals.set("WIDTH", canvaWidth);
-  pyodide.globals.set("HEIGHT", canvaHeight);
-  document.getElementById("main").style.display = "block"; // mostra a div
-  document.getElementById("setAgent").style.display = "none";   // esconde o botão
-  document.getElementById("titulo").textContent = `Treine ${agentName}`
-
-  updateAgentsFromPyodide();
+  setTimeout(loopAPet, 20);
 }
 
 async function updateAgentsFromPyodide() {
@@ -82,7 +69,7 @@ async function updateAgentsFromPyodide() {
   //const end = performance.now();
   //console.log(`Execução do passo: ${Math.round(end - start)} ms`);
 
-  setTimeout(updateAgentsFromPyodide, 20);
+  //setTimeout(updateAgentsFromPyodide, 20);
 }
 
 function setup() {
@@ -90,10 +77,7 @@ function setup() {
   canvaHeight = Math.min(windowHeight/2, 800);
   let canvas = createCanvas(canvaWidth, canvaHeight);
   canvas.parent("simContainer");
-
-  //setInitialConditions();
 }
-
 
 function draw() {
   background(255);
@@ -103,12 +87,4 @@ function draw() {
     return;
   }
 drawAPet(agent, canvaWidth/2, canvaHeight/2);
-
-  // drawAPet({
-  //   shape: "circle",
-  //   color: "#6ec1e4",
-  //   eyes: "round",
-  //   mouth: "smile",
-  //   accessories: []
-  //   }, canvaWidth/2, canvaHeight/2);
 }

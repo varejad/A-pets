@@ -8,10 +8,10 @@ function preloadAccessories(skins) {
 
 
 // Função principal que desenha um A-Pet
-function drawAPet(petData, x, y) {
-  console.log(`${petData.color}\n${petData.shape}\n${petData.eyes}`)
+function drawAPet(petData) {
+  //console.log(`${petData.color}\n${petData.shape}\n${petData.eyes}`)
   push();
-  translate(x, y);
+  translate(petData.positionX, petData.positionY);
   
   // Desenhar corpo
   noStroke();
@@ -38,8 +38,6 @@ function drawAPet(petData, x, y) {
   // Desenhar rosto
   drawEyes(petData, petData.eyes || "round");
   drawMouth(petData, petData.mouth || "smile");
-  //drawEyes("round");
-  //drawMouth("smile");
 
   // Acessórios
   // if (petData.accessories && accessoryImages) {

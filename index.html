@@ -7,32 +7,32 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- <h1 id="titulo">Treine seu Agente</h1> -->
-
   <main>
     <div id="main" >
       <div id="simContainer">
         <!-- O canvas será criado e inserido aqui pelo p5.js -->
       </div>
-      <label for="cor-corpo">Cor do corpo:</label>
-      <input type="color" id="cor-corpo" name="cor-corpo">
+      
+      <div id="customizacao">
+        <label for="cor-corpo">Cor do corpo:</label>
+        <input type="color" id="cor-corpo" name="cor-corpo" value="#d4a268">
 
-      <label for="forma-corpo">Forma do corpo:</label>
-      <select id="forma-corpo" name="forma-corpo">
-      <option value="square">Quadrado</option>
-      <option value="circle">Círculo</option>
-      <option value="triangle">Triângulo</option>
-      </select>
+        <label for="forma-corpo">Forma do corpo:</label>
+        <select id="forma-corpo" name="forma-corpo">
+        <option value="square">Quadrado</option>
+        <option value="circle">Círculo</option>
+        <option value="triangle">Triângulo</option>
+        </select>
 
-      <label for="cor-olhos">Cor dos olhos:</label>
-      <input type="color" id="cor-olhos" name="cor-olhos">
+        <label for="cor-olhos">Cor dos olhos:</label>
+        <input type="color" id="cor-olhos" name="cor-olhos" value="#6d3d1c">
 
-      <label for="cor-boca">Cor da boca:</label>
-      <input type="color" id="cor-boca" name="cor-boca">
+        <label for="cor-boca">Cor da boca:</label>
+        <input type="color" id="cor-boca" name="cor-boca" value="#bb5d5d">
 
-      <br><br>
-      <button onclick="criarAPet()">Criar</button>
+        <br><br>
+        <button onclick="criarAPet()">Criar</button>
+      </div>
     </div>
   </main>
 
@@ -58,14 +58,14 @@ PASSOS_POR_SEGUNDO = 20  # 1 segundo = 20 passos (com loop de 0.05s)
 WIDTH = 400
 HEIGHT = 400
 
-responses = {("cima",):[0,6],
-             ("baixo",):[0,6],
+responses = {("pular",):[0,6],
+             ("pegar",):[0,6],
              ("esq",):[0,6],
              ("dir",):[0,6],
              ("parado",):[0,6]}
 
 class Agents(Aprendente):
-    def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, angle = 0, color="#000000", name = "", shape = "square", eyeColor="black", mouthColor="black"):
+    def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, color="#000000", name = "", shape = "square", eyeColor="black", mouthColor="black"):
         super().__init__(acoes, variar, prob_variacao)
         self.positionX = positionX
         self.positionY = positionY
@@ -117,14 +117,12 @@ class Agents(Aprendente):
 
 # Loop de simulação
 def simular_em_loop():
-    for agent in agents:
-        agent.previousPositionY = agent.positionY
-        agent.previousPositionX = agent.positionX
-        #context = agent.set_context()
-        agent.to_respond(agent.antecedente_atual)
-        agent.set_consequence()
-    #time.sleep(1/PASSOS_POR_SEGUNDO)  # PASSOS_POR_SEGUNDO = 20, logo 50ms por passo
-
+  agentAPet.previousPositionY = agentAPet.positionY
+  agentAPet.previousPositionX = agentAPet.positionX
+  #context = agentAPet.set_context()
+  agentAPet.to_respond(agentAPet.antecedente_atual)
+  agentAPet.set_consequence()
+  #time.sleep(1/PASSOS_POR_SEGUNDO)  # PASSOS_POR_SEGUNDO = 20, logo 50ms por passo
         `;
         await pyodide.runPythonAsync(code);
 
