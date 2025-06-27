@@ -38,8 +38,8 @@ function drawAPet(petData, x, y) {
   // Desenhar rosto
   // drawEyes(petData.eyes || "round");
   // drawMouth(petData.mouth || "smile");
-  //drawEyes("round");
-  //drawMouth("smile");
+  drawEyes("round");
+  drawMouth("smile");
 
   // Acessórios
   // if (petData.accessories && accessoryImages) {
