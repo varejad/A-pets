@@ -9,6 +9,7 @@ function preloadAccessories(skins) {
 
 // Função principal que desenha um A-Pet
 function drawAPet(petData, x, y) {
+  console.log(`${petData.color}\n${petData.shape}\n${petData.eyes}`)
   push();
   translate(x, y);
   
@@ -30,30 +31,33 @@ function drawAPet(petData, x, y) {
     smoothTriangle(0, 0, size); // aqui você desenha com base no centro local
     break;
   default:
+    console.log("default")
     ellipse(0, 0, size, size);
 }
 
   // Desenhar rosto
-  drawEyes(petData.eyes || "round");
-  drawMouth(petData.mouth || "smile");
+  // drawEyes(petData.eyes || "round");
+  // drawMouth(petData.mouth || "smile");
+  //drawEyes("round");
+  //drawMouth("smile");
 
   // Acessórios
-  if (petData.accessories && accessoryImages) {
-    for (let acc of petData.accessories) {
-      const img = accessoryImages[acc];
-      if (img) {
-        imageMode(CENTER);
-        image(img, 0, -size / 2 + 10, 40, 40); // exemplo: chapéu no topo
-      }
-    }
-  }
+  // if (petData.accessories && accessoryImages) {
+  //   for (let acc of petData.accessories) {
+  //     const img = accessoryImages[acc];
+  //     if (img) {
+  //       imageMode(CENTER);
+  //       image(img, 0, -size / 2 + 10, 40, 40); // exemplo: chapéu no topo
+  //     }
+  //   }
+  // }
 
   pop();
 }
 
 // Desenha olhos simples
 function drawEyes(type) {
-  fill(0);
+  fill(petData.eyeColor || "#cccccc");
   if (type === "round") {
     ellipse(-10, -10, 8, 8);
     ellipse(10, -10, 8, 8);
@@ -72,7 +76,7 @@ function drawEyes(type) {
 
 // Desenha bocas simples
 function drawMouth(type) {
-  noFill();
+  fill(petData.mouthColor || "#cccccc");
   stroke(0);
   strokeWeight(2);
 

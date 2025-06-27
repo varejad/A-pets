@@ -11,11 +11,28 @@ let canvaHeight;
   });
 }*/
 
+function criarAPet() {
+  const corCorpo = document.getElementById('cor-corpo').value;
+  const formaCorpo = document.getElementById('forma-corpo').value;
+  const corOlhos = document.getElementById('cor-olhos').value;
+  const corBoca = document.getElementById('cor-boca').value;
 
-function enviarInstrucao() {
-  const instrucao = document.getElementById("inputInstrucao").value;
-  pyodide.runPython(`agents[0].antecedente_atual = ("${instrucao}",)`);
+  pyodide.runPython(`
+    agentAPet = Agents(responses, 
+                       prob_variacao=0.0, 
+                       positionX=200, 
+                       positionY=200, 
+                       color="${corCorpo}", 
+                       name="js_name", 
+                       shape = "${formaCorpo}", 
+                       eyeColor="${corOlhos}", 
+                       mouthColor="${corBoca}")`);
+      
+  agent = pyodide.globals.get("agentAPet")
+  console.log(agent.color + "\n-----------\n" + Reflect.get(agent))
+  drawAPet(agent, canvaWidth/2, canvaHeight/2);
 }
+
 
 async function setInitialConditionsAndStart() {
   const selectedColor = document.getElementById("agentColor").value;
@@ -81,27 +98,11 @@ function setup() {
 function draw() {
   background(255);
 
-  drawAPet({
-    shape: "circle",
-    color: "#6ec1e4",
-    eyes: "round",
-    mouth: "smile",
-    accessories: []
-    }, 100, 100);
-
-  drawAPet({
-    shape: "square",
-    color: "#6ec1e4",
-    eyes: "round",
-    mouth: "smile",
-    accessories: []
-  }, 200, 200);
-
-  drawAPet({
-    shape: "triangle",
-    color: "#6ec1e4",
-    eyes: "round",
-    mouth: "smile",
-    accessories: []
-  }, 300, 300);
+  // drawAPet({
+  //   shape: "circle",
+  //   color: "#6ec1e4",
+  //   eyes: "round",
+  //   mouth: "smile",
+  //   accessories: []
+  //   }, canvaWidth/2, canvaHeight/2);
 }

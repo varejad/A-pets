@@ -11,51 +11,29 @@
   <!-- <h1 id="titulo">Treine seu Agente</h1> -->
 
   <main>
-     <!-- Indicador de carregamento -->
-    <div id="loading">
-      <p>Carregando, por favor aguarde...</p>
-    </div>
-
-    <!-- Interface principal (escondida inicialmente) -->
     <div id="main" >
       <div id="simContainer">
         <!-- O canvas será criado e inserido aqui pelo p5.js -->
       </div>
-      <div id="controls" style="display: none;">
-        <!-- Entrada de instrução -->
-        <div id="instrucao" class="control-box" style="display: block;">
-          <label for="inputInstrucao">Instrução:</label>
-          <input type="text" id="inputInstrucao" maxlength="50" placeholder="Digite uma instrução...">
-          <button onclick="enviarInstrucao()">Enviar</button>
-        </div>
+      <label for="cor-corpo">Cor do corpo:</label>
+      <input type="color" id="cor-corpo" name="cor-corpo">
 
-        <!-- botões de reforçamento e punição -->
-        <div id="botoesReP" class="control-box horizontal">
-          <!-- tentar fazer usando codigo pyodide sincrono -->
-          <!-- tentar fazer indicando no metodo consequence a quantidade de reforco -->
-          <button onclick="Reflect.get(agent, 'reforcar')(5); console.log('reforçado' + Reflect.get(agent, '_antecedentes_e_respostas'))">Recompensa!</button>
-          <button onclick="Reflect.get(agent, 'reforcar')(-3);">Punição!</button>
-        </div>
-      </div>
-    </div>
+      <label for="forma-corpo">Forma do corpo:</label>
+      <select id="forma-corpo" name="forma-corpo">
+      <option value="square">Quadrado</option>
+      <option value="circle">Círculo</option>
+      <option value="triangle">Triângulo</option>
+      </select>
 
-    <!-- Botão de início (escondido até carregar) -->
-    <div id="setAgent" style="text-align: center; margin-top: 1em; display: none;">
-      <label for="agentColor">Cor do agente:</label>
-      <input type="color" id="agentColor" name="agentColor" value="#5690E6">
+      <label for="cor-olhos">Cor dos olhos:</label>
+      <input type="color" id="cor-olhos" name="cor-olhos">
+
+      <label for="cor-boca">Cor da boca:</label>
+      <input type="color" id="cor-boca" name="cor-boca">
 
       <br><br>
-
-      <label for="agentName">Nome do agente:</label>
-      <input type="text" id="agentName" name="agentName" placeholder="Digite um nome">
-
-      <br><br>
-
-      <button id="startBtn" onclick="setInitialConditionsAndStart();">
-        🚀 Iniciar 
-      </button>
+      <button onclick="criarAPet()">Criar</button>
     </div>
-
   </main>
 
   <!-- Scripts externos: carregam primeiro -->
@@ -87,18 +65,19 @@ responses = {("cima",):[0,6],
              ("parado",):[0,6]}
 
 class Agents(Aprendente):
-    def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, angle = 0, color="#000000", name = ""):
+    def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, angle = 0, color="#000000", name = "", shape = "square", eyeColor="black", mouthColor="black"):
         super().__init__(acoes, variar, prob_variacao)
         self.positionX = positionX
         self.positionY = positionY
-        #self.angle = angle # servia para definir para onde o agente está 'virado'
         self.passos_restantes = 0
         self.color = color
-        self.circle_color = "#ffffff"
         self.previousPositionX = positionX
         self.previousPositionY = positionY
         self.name = name
         self.antecedente_atual = ("sem contexto",)
+        self.shape = shape
+        self.eyeColor = eyeColor
+        self.mouthColor = mouthColor
     
     #def set_context(self):
         #context = ("sem contexto",)
@@ -154,10 +133,6 @@ def simular_em_loop():
       }
       // Torna acessível no escopo global
       window.pyodide = pyodide;
-
-      // Tudo carregado — esconder "Carregando..." e mostrar botão de iniciar
-      document.getElementById("loading").style.display = "none";
-      document.getElementById("setAgent").style.display = "block";
     }
 
     init();
