@@ -40,9 +40,9 @@ function loopAPet() {
   pyodide.runPython("simular_em_loop()")
   
   const end = performance.now();
-  console.log(`Execução do passo: ${Math.round(end - start)} ms`);
+  //console.log(`Execução do passo: ${Math.round(end - start)} ms`);
 
-  //setTimeout(loopAPet, 20);
+  setTimeout(loopAPet, 20);
 }
 
 async function updateAgentsFromPyodide() {

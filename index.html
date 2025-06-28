@@ -88,8 +88,6 @@ class Agents(Aprendente):
         self.positionY = positionY
         self.passos_restantes = 0
         self.color = color
-        self.previousPositionX = positionX
-        self.previousPositionY = positionY
         self.name = name
         self.antecedente_atual = ("sem contexto",)
         self.shape = shape
@@ -106,21 +104,18 @@ class Agents(Aprendente):
         print(self._acao_atual[0])
         # Executa a ação atual
         if self._acao_atual[0] == "pular":
-          for i in range(10):
+          if self.passos_restantes > (PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2))/2: # 1seg e meio por ação
             self.positionY = (self.positionY - 1) % HEIGHT
-            #time.sleep(1/PASSOS_POR_SEGUNDO)  # PASSOS_POR_SEGUNDO = 20, logo 50ms por passo
-          for i in range(10):
-            self.positionY = (self.positionY - 1) % HEIGHT
-            #time.sleep(1/PASSOS_POR_SEGUNDO)  # PASSOS_POR_SEGUNDO = 20, logo 50ms por passo
-            print(self._acao_atual[0])
+          else:
+            self.positionY = (self.positionY + 1) % HEIGHT
+            #print(PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2)/2)
     
     # Executa as ações
     def to_responde(self, context):
         if self.passos_restantes == 0:
-            self.circle_color = "#FFFFFF"
             self.proxima_acao(context)
             self.passos_restantes = PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2) # 1seg e meio por ação
-            print(self._acao_atual)
+            #print(self._acao_atual)
 
         # Executa a ação atual
         if self._acao_atual[0] == "pular":
@@ -135,12 +130,19 @@ class Agents(Aprendente):
 
 # Loop de simulação
 def simular_em_loop():
-  agentAPet.previousPositionY = agentAPet.positionY
-  agentAPet.previousPositionX = agentAPet.positionX
-  agentAPet.proxima_acao(agentAPet.antecedente_atual)
-  #context = agentAPet.set_context()
+  if agentAPet.passos_restantes == 0:
+      #context = agentAPet.set_context()
+      agentAPet.proxima_acao(agentAPet.antecedente_atual)
+      agentAPet.passos_restantes = PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2) # 1seg e meio por ação
+      #print(agentAPet._acao_atual)
+      print(agentAPet.passos_restantes)
+
   agentAPet.to_respond(agentAPet.antecedente_atual)
-  agentAPet.set_consequence()
+
+  #diminue um passo
+  agentAPet.passos_restantes -= 1
+
+  #agentAPet.set_consequence()
   #time.sleep(1/PASSOS_POR_SEGUNDO)  # PASSOS_POR_SEGUNDO = 20, logo 50ms por passo
         `;
         await pyodide.runPythonAsync(code);
