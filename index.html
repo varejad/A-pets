@@ -99,6 +99,8 @@ class Agents(Aprendente):
         self.eyeColor = eyeColor
         self.mouthColor = mouthColor
         self.size = 60
+        self.mouthType = "flat"
+        self.eyeType = "round"
     
     #def set_context(self):
         #context = ("sem contexto",)
@@ -150,6 +152,7 @@ class Agents(Aprendente):
 # Loop de simulação
 def simular_em_loop():
   if agentAPet.passos_restantes == 0:
+      agentAPet.mouthType = "flat"
       #context = agentAPet.set_context()
       agentAPet.proxima_acao(agentAPet.antecedente_atual)
       agentAPet.passos_restantes = PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2) # 1seg e meio por ação

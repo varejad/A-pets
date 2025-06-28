@@ -57,7 +57,7 @@ function drawAPet(petData) {
 function drawEyes(petData) {
   fill(petData.eyeColor || "#cccccc");
 
-  type = petData.eyes || "round";
+  type = petData.eyesType || "round";
   if (type === "round") {
     ellipse(-10, -10, 8, 8);
     ellipse(10, -10, 8, 8);
@@ -80,7 +80,7 @@ function drawMouth(petData) {
   stroke(0);
   strokeWeight(2);
 
-  type = petData.mouth || "smile";
+  type = petData.mouthType || "smile";
   if (type === "smile") {
     arc(0, 10, 20, 10, 0, PI);
   } else if (type === "sad") {

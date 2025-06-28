@@ -11,10 +11,16 @@ let canvaHeight;
 
 function reforcar(){
   Reflect.get(agent, 'reforcar')(5);
+  
 }
 
 function punir(){
-  Reflect.get(agent, 'reforcar')(-3);
+  //Reflect.get(agent, 'reforcar')(-3);
+  
+  pyodide.runPython(`
+agentAPet.reforcar(-3)
+agentAPet.mouthType = "sad"
+`);
 }
 
 function enviarInstrucao() {
