@@ -17,7 +17,7 @@ function drawAPet(petData) {
   noStroke();
   fill(petData.color || "#cccccc");
 
-  const size = 60;
+  const size = petData.size;
 
   switch (petData.shape) {
   case "circle":
@@ -36,8 +36,8 @@ function drawAPet(petData) {
 }
 
   // Desenhar rosto
-  drawEyes(petData, petData.eyes || "round");
-  drawMouth(petData, petData.mouth || "smile");
+  drawEyes(petData);
+  drawMouth(petData);
 
   // Acessórios
   // if (petData.accessories && accessoryImages) {

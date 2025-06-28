@@ -93,6 +93,7 @@ class Agents(Aprendente):
         self.shape = shape
         self.eyeColor = eyeColor
         self.mouthColor = mouthColor
+        self.size = 60
     
     #def set_context(self):
         #context = ("sem contexto",)
@@ -116,6 +117,12 @@ class Agents(Aprendente):
           self.positionX = (self.positionX + 1) % WIDTH
         if self._acao_atual[0] == "parado":
           pass
+        
+        if self._acao_atual[0] == "entrar": #NÃO FICOU LEGAL PQ SÓ DIMINUI O CORPO E NÃO DIMINUI O ROSTO
+          if self.passos_restantes > (PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2))/2:
+            self.size -= 1
+          else:
+            self.size += 1
     
     # Executa as ações
     def to_responde(self, context):
