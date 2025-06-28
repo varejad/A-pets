@@ -74,12 +74,12 @@ PASSOS_POR_SEGUNDO = 20  # 1 segundo = 20 passos (com loop de 0.05s)
 WIDTH = 400
 HEIGHT = 400
 
-responses = {("pular",):[0,60],
+responses = {("pular",):[0,6],
              ("pegar",):[0,1],
-             ("esq",):[0,1],
-             ("dir",):[0,1],
+             ("esq",):[0,6],
+             ("dir",):[0,6],
              ("entrar",):[0,1],
-             ("parado",):[0,1]}
+             ("parado",):[0,6]}
 
 class Agents(Aprendente):
     def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, color="#000000", name = "", shape = "square", eyeColor="black", mouthColor="black"):
@@ -109,6 +109,13 @@ class Agents(Aprendente):
           else:
             self.positionY = (self.positionY + 1) % HEIGHT
             #print(PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2)/2)
+        
+        if self._acao_atual[0] == "esq":
+          self.positionX = (self.positionX - 1) % WIDTH
+        if self._acao_atual[0] == "dir":
+          self.positionX = (self.positionX + 1) % WIDTH
+        if self._acao_atual[0] == "parado":
+          pass
     
     # Executa as ações
     def to_responde(self, context):
