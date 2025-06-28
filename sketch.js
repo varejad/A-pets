@@ -9,17 +9,35 @@ let canvaHeight;
   });
 }*/
 
+function reforcar(){
+  Reflect.get(agent, 'reforcar')(5);
+}
+
+function punir(){
+  Reflect.get(agent, 'reforcar')(-3);
+}
+
+function enviarInstrucao() {
+  const instrucao = document.getElementById("inputInstrucao").value;
+  pyodide.runPython(`agentAPet.antecedente_atual = ("${instrucao}",)`);
+
+  document.getElementById("labelInputInstrucao").textContent = `Instrução atual: ${instrucao}`
+}
+
 function criarAPet() {
   const corCorpo = document.getElementById('cor-corpo').value;
   const formaCorpo = document.getElementById('forma-corpo').value;
   const corOlhos = document.getElementById('cor-olhos').value;
   const corBoca = document.getElementById('cor-boca').value;
 
+  pyodide.globals.set("WIDTH", canvaWidth); // atualiza variáveis python
+  pyodide.globals.set("HEIGHT", canvaHeight);
+
   pyodide.runPython(`
     agentAPet = Agents(responses, 
                        prob_variacao=0.0, 
-                       positionX=200, 
-                       positionY=200, 
+                       positionX= WIDTH/2, 
+                       positionY= HEIGHT - (HEIGHT/3), 
                        color="${corCorpo}", 
                        name="js_name", 
                        shape = "${formaCorpo}", 
@@ -27,8 +45,6 @@ function criarAPet() {
                        mouthColor="${corBoca}")`);
       
   agent = pyodide.globals.get("agentAPet")
-  pyodide.globals.set("WIDTH", canvaWidth); // atualiza variáveis python
-  pyodide.globals.set("HEIGHT", canvaHeight);
   //document.getElementById("customizacao").style.display = "none";   // esconde a div de customização
   document.getElementById("controls").style.display = "block";
 

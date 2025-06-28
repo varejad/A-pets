@@ -8,7 +8,12 @@
 </head>
 <body>
   <main>
-    <div id="main" >
+    <!-- Indicador de carregamento -->
+    <div id="loading">
+      <p>Carregando, por favor aguarde...</p>
+    </div>
+
+    <div id="main" style="display: none;">
       <div id="simContainer">
         <!-- O canvas será criado e inserido aqui pelo p5.js -->
       </div>
@@ -37,7 +42,7 @@
       <div id="controls" style="display: none;">
         <!-- Entrada de instrução -->
         <div id="instrucao">
-          <label for="inputInstrucao">Instrução:</label>
+          <label for="inputInstrucao" id="labelInputInstrucao">Instrução:</label>
           <input type="text" id="inputInstrucao" maxlength="50" placeholder="Digite uma instrução...">
           <button onclick="enviarInstrucao()">Enviar</button>
         </div>
@@ -45,8 +50,8 @@
         <div id="botoesReP">
           <!-- tentar fazer usando codigo pyodide sincrono -->
           <!-- tentar fazer indicando no metodo consequence a quantidade de reforco -->
-          <button onclick="Reflect.get(agent, 'reforcar')(5);">Recompensa!</button>
-          <button onclick="Reflect.get(agent, 'reforcar')(-3);">Punição!</button>
+          <button onclick="reforcar()">Recompensa!</button>
+          <button onclick="punir()">Punição!</button>
         </div>
       </div>
     </div>
@@ -166,6 +171,10 @@ def simular_em_loop():
       }
       // Torna acessível no escopo global
       window.pyodide = pyodide;
+
+      // Tudo carregado — esconder "Carregando..." e mostrar botão de iniciar
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("main").style.display = "block";
     }
 
     init();
