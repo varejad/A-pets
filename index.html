@@ -16,7 +16,8 @@
     <div id="main" style="display: none;">
       <div id="infos">
         <p id="nomeApet">Nome do seu A-pet: </p>
-        <p id="levelApet">Nível: </p>
+        <p id="xp">Experiencia: </p>
+        <p id="moedas">moedas: </p>
       </div>
       <div id="simContainer">
         <!-- O canvas será criado e inserido aqui pelo p5.js -->
@@ -101,7 +102,7 @@ HEIGHT = 400
 
 class User():
     def __init__(self):
-        self.reforces = 100
+        self.moedas = 100
 
 responses = {("pular",):[5,10],
              ("pegar",):[0,1],

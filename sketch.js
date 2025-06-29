@@ -9,32 +9,41 @@ let canvaHeight;
   });
 }*/
 
-function reforcar(){
-  if (Reflect.get(user, "reforces")>= 5){
+function reforcar(magnitudeDeReforco=5){
+  if (Reflect.get(user, "moedas")>=magnitudeDeReforco5){
     pyodide.runPython(`
-agentAPet.consequence += 5
-agentAPet.xp += 5
+magnitude_de_reforco = ${magnitudeDeReforco}
+agentAPet.consequence += magnitude_de_reforco
+agentAPet.xp += magnitude_de_reforco
 agentAPet.mouthType = "smile"
-user.reforces -= 5
+user.moedas -= magnitude_de_reforco
 `)
     esconderAvisoReforco();
   } else{
     mostrarAvisoReforco();
   }
-  document.getElementById("levelApet").textContent = `Nível: ${Reflect.get(agent, "xp")}`
+  atualizarInfos();
+
   // CRIAR FORMULA PARA CONVERTER XP EM LEVEL
 }
 
 async function punir(magnitudeDePunicao=3){
-  pyodide.runPythonAsync(`
+  if (Reflect.get(user, "moedas")>= magnitudeDePunicao){
+    pyodide.runPythonAsync(`
 magnitude_de_punicao = ${magnitudeDePunicao}
 if agentAPet.respostas_atuais[agentAPet._acao_atual][1] - magnitude_de_punicao > agentAPet.respostas_atuais[agentAPet._acao_atual][0]:
   agentAPet.reforcar(-3)
 agentAPet.mouthType = "sad"
 agentAPet.xp += 3
+user.moedas -= magnitude_de_punicao
   `);
-  document.getElementById("levelApet").textContent = `Nível: ${Reflect.get(agent, "xp")}`
   // CRIAR FORMULA PARA CONVERTER XP EM LEVEL
+    esconderAvisoReforco();
+  } else{
+    mostrarAvisoReforco();
+  }
+  atualizarInfos();
+
 }
 
 function enviarInstrucao() {
@@ -67,10 +76,10 @@ function criarAPeteUser() {
       
   agent = pyodide.globals.get("agentAPet")
   user = pyodide.globals.get("user")
-  //document.getElementById("customizacao").style.display = "none";   // esconde a div de customização
+  document.getElementById("customizacao").style.display = "none";   // esconde a div de customização
   document.getElementById("controls").style.display = "block";
   document.getElementById("nomeApet").textContent = `${APetName}`
-  document.getElementById("levelApet").textContent = `Nível: ${Reflect.get(agent, "xp")}`
+  atualizarInfos();
 
   loopAPet();
 }
@@ -85,33 +94,6 @@ function loopAPet() {
   setTimeout(loopAPet, 20);
 }
 
-// async function updateAgentsFromPyodide() {
-//   //const start = performance.now();
-
-//   if (typeof pyodide !== "undefined") {
-//     try {
-//       await pyodide.runPythonAsync("simular_em_loop()")
-
-//       // Pega a variável Python "agents" e transforma em array JavaScript (virou um array onde cada item é um array de chaves e valores)
-//       let pyAgents = pyodide.globals.get("agents").toJs({dict_converter: Object});
-
-//       // transformar o array de arrays recebido acima em um objeto JS
-//       agents = pyAgents.map(arrayOfPairs => {
-//       // Verificação opcional, mas boa prática, caso algum item não seja um array de pares
-//       if (Array.isArray(arrayOfPairs)) {
-//         return Object.fromEntries(arrayOfPairs);
-//       }
-//       return arrayOfPairs; // Retorna como está se não for um array (segurança)
-//       });
-//     } catch (e) {
-//       console.error("Erro ao acessar agents do Pyodide:", e);
-//     }
-//   } else {console.log("pyodide ainda não iniciado")}
-//   //const end = performance.now();
-//   //console.log(`Execução do passo: ${Math.round(end - start)} ms`);
-
-//   //setTimeout(updateAgentsFromPyodide, 20);
-// }
 
 function setup() {
   canvaWidth = Math.min(windowWidth - 10, 600);
@@ -139,11 +121,12 @@ function esconderAvisoReforco() {
 }
 
 function ganharReforcadores() {
-  pyodide.runPython(`user.reforces += 50`);
+  pyodide.runPython(`user.moedas += 50`);
   esconderAvisoReforco();
-}
+  atualizarInfos();
 
-/*
-1 1 2 3 5 8 13 21 34 55 89 144 233
- 
-*/
+}
+function atualizarInfos(){
+  document.getElementById("moedas").textContent = `Moedas: ${Reflect.get(user, "moedas")}`
+  document.getElementById("xp").textContent = `Experiencia: ${Reflect.get(agent, "xp")}`
+}
