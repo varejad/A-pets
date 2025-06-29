@@ -21,19 +21,20 @@ user.reforces -= 5
   } else{
     mostrarAvisoReforco();
   }
-  
   document.getElementById("levelApet").textContent = `Nível: ${Reflect.get(agent, "xp")}`
+  // CRIAR FORMULA PARA CONVERTER XP EM LEVEL
 }
 
-async function punir(){
-  // TESTAR COMO RESOLVER A PUNIÇÃO CHEGANDO A ZERAR FATOR DE PROBABILIDADE
+async function punir(magnitudeDePunicao=3){
   pyodide.runPythonAsync(`
-agentAPet.reforcar(-3)
+magnitude_de_punicao = ${magnitudeDePunicao}
+if agentAPet.respostas_atuais[agentAPet._acao_atual][1] - magnitude_de_punicao > agentAPet.respostas_atuais[agentAPet._acao_atual][0]:
+  agentAPet.reforcar(-3)
 agentAPet.mouthType = "sad"
 agentAPet.xp += 3
   `);
   document.getElementById("levelApet").textContent = `Nível: ${Reflect.get(agent, "xp")}`
-
+  // CRIAR FORMULA PARA CONVERTER XP EM LEVEL
 }
 
 function enviarInstrucao() {
@@ -141,3 +142,8 @@ function ganharReforcadores() {
   pyodide.runPython(`user.reforces += 50`);
   esconderAvisoReforco();
 }
+
+/*
+1 1 2 3 5 8 13 21 34 55 89 144 233
+ 
+*/
