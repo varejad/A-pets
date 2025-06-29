@@ -39,7 +39,7 @@
         <input type="color" id="cor-boca" name="cor-boca" value="#bb5d5d">
 
         <br><br>
-        <button onclick="criarAPet()">Criar</button>
+        <button onclick="criarAPeteUser()">Criar</button>
       </div>
 
       <div id="controls" style="display: none;">
@@ -82,12 +82,16 @@ PASSOS_POR_SEGUNDO = 20  # 1 segundo = 20 passos (com loop de 0.05s)
 WIDTH = 400
 HEIGHT = 400
 
-responses = {("pular",):[0,6],
+class User():
+    def __init__(self):
+        self.reforces = 200
+
+responses = {("pular",):[5,10],
              ("pegar",):[0,1],
-             ("esq",):[0,6],
-             ("dir",):[0,6],
+             ("esq",):[3,10],
+             ("dir",):[3,10],
              ("entrar",):[0,1],
-             ("parado",):[0,6]}
+             ("parado",):[1,10]}
 
 class Agents(Aprendente):
     def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, color="#000000", name = "", shape = "square", eyeColor="black", mouthColor="black"):
@@ -106,6 +110,7 @@ class Agents(Aprendente):
         self.eyeType = "round"
         self.xp = 0
         self.consequence = 0
+        self.disposicao = 1000
     
     #def set_context(self):
         #context = ("sem contexto",)
@@ -114,14 +119,12 @@ class Agents(Aprendente):
     # Tentar executar as açoes
     def to_respond(self, context):
 
-        print(self._acao_atual[0])
         # Executa a ação atual
         if self._acao_atual[0] == "pular":
           if self.passos_restantes > (PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2))/2: # 1seg e meio por ação
             self.positionY = (self.positionY - 1) % HEIGHT
           else:
             self.positionY = (self.positionY + 1) % HEIGHT
-            #print(PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2)/2)
         
         if self._acao_atual[0] == "esq":
           self.positionX = (self.positionX - 1) % WIDTH
