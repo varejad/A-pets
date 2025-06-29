@@ -13,12 +13,16 @@ function reforcar(){
   if (Reflect.get(user, "reforces")>= 5){
     pyodide.runPython(`
 agentAPet.consequence += 5
+agentAPet.xp += 5
 agentAPet.mouthType = "smile"
 user.reforces -= 5
 `)
+    esconderAvisoReforco();
   } else{
-    console.log("usuário não possui reforçadores suficientes")
-  }   
+    mostrarAvisoReforco();
+  }
+  
+  document.getElementById("levelApet").textContent = `Nível: ${Reflect.get(agent, "xp")}`
 }
 
 async function punir(){
@@ -26,7 +30,10 @@ async function punir(){
   pyodide.runPythonAsync(`
 agentAPet.reforcar(-3)
 agentAPet.mouthType = "sad"
+agentAPet.xp += 3
   `);
+  document.getElementById("levelApet").textContent = `Nível: ${Reflect.get(agent, "xp")}`
+
 }
 
 function enviarInstrucao() {
@@ -61,6 +68,8 @@ function criarAPeteUser() {
   user = pyodide.globals.get("user")
   //document.getElementById("customizacao").style.display = "none";   // esconde a div de customização
   document.getElementById("controls").style.display = "block";
+  document.getElementById("nomeApet").textContent = `${APetName}`
+  document.getElementById("levelApet").textContent = `Nível: ${Reflect.get(agent, "xp")}`
 
   loopAPet();
 }
@@ -118,4 +127,17 @@ function draw() {
     return;
   }
 drawAPet(agent, canvaWidth/2, canvaHeight/2);
+}
+
+function mostrarAvisoReforco() {
+  document.getElementById("avisoReforcoOverlay").style.display = "flex";
+}
+
+function esconderAvisoReforco() {
+  document.getElementById("avisoReforcoOverlay").style.display = "none";
+}
+
+function ganharReforcadores() {
+  pyodide.runPython(`user.reforces += 50`);
+  esconderAvisoReforco();
 }
