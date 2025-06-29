@@ -19,6 +19,9 @@
       </div>
       
       <div id="customizacao">
+        <label for="agentName">Nome do seu A-pet:</label>
+        <input type="text" id="APetName" placeholder="Digite um nome">
+
         <label for="cor-corpo">Cor do corpo:</label>
         <input type="color" id="cor-corpo" name="cor-corpo" value="#d4a268">
 
@@ -101,6 +104,8 @@ class Agents(Aprendente):
         self.size = 60
         self.mouthType = "flat"
         self.eyeType = "round"
+        self.xp = 0
+        self.consequence = 0
     
     #def set_context(self):
         #context = ("sem contexto",)
@@ -131,41 +136,26 @@ class Agents(Aprendente):
           else:
             self.size += 1
     
-    # Executa as ações
-    def to_responde(self, context):
-        if self.passos_restantes == 0:
-            self.proxima_acao(context)
-            self.passos_restantes = PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2) # 1seg e meio por ação
-            #print(self._acao_atual)
-
-        # Executa a ação atual
-        if self._acao_atual[0] == "pular":
-            self.positionY = (self.positionY - 1) % HEIGHT
-        
-        #diminue um passo
-        self.passos_restantes -= 1
-    
     def set_consequence(self):
-      pass
+      if self.consequence != 0:
+        self.reforcar(self.consequence)
 
 
 # Loop de simulação
 def simular_em_loop():
   if agentAPet.passos_restantes == 0:
+      agentAPet.set_consequence()
+      agentAPet.consequence = 0
+      # INICIA NOVO CICLO DE COMPORTAMENTO ABAIXO
       agentAPet.mouthType = "flat"
       #context = agentAPet.set_context()
       agentAPet.proxima_acao(agentAPet.antecedente_atual)
       agentAPet.passos_restantes = PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2) # 1seg e meio por ação
-      #print(agentAPet._acao_atual)
-      print(agentAPet.passos_restantes)
 
   agentAPet.to_respond(agentAPet.antecedente_atual)
 
   #diminue um passo
   agentAPet.passos_restantes -= 1
-
-  #agentAPet.set_consequence()
-  #time.sleep(1/PASSOS_POR_SEGUNDO)  # PASSOS_POR_SEGUNDO = 20, logo 50ms por passo
         `;
         await pyodide.runPythonAsync(code);
 

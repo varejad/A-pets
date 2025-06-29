@@ -6,7 +6,6 @@ function preloadAccessories(skins) {
   }
 }
 
-
 // Função principal que desenha um A-Pet
 function drawAPet(petData) {
   //console.log(`${petData.color}\n${petData.shape}\n${petData.eyes}`)

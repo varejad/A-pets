@@ -5,19 +5,22 @@ let canvaHeight;
 
 /*function preload() {
   skinsData = loadJSON("data/skins.json", () => {
-    preloadAccessories(skinsData);
+    preloadAccessories(skinsData); 
   });
 }*/
 
 function reforcar(){
-  Reflect.get(agent, 'reforcar')(5);
+  pyodide.runPython(`
+agentAPet.consequence += 5
+agentAPet.mouthType = "smile"
+`)
   
 }
 
-function punir(){
+async function punir(){
   //Reflect.get(agent, 'reforcar')(-3);
-  
-  pyodide.runPython(`
+  // TESTAR COMO RESOLVER A PUNIÇÃO CHEGANDO A ZERAR FATOR DE PROBABILIDADE
+  pyodide.runPythonAsync(`
 agentAPet.reforcar(-3)
 agentAPet.mouthType = "sad"
 `);
@@ -35,6 +38,7 @@ function criarAPet() {
   const formaCorpo = document.getElementById('forma-corpo').value;
   const corOlhos = document.getElementById('cor-olhos').value;
   const corBoca = document.getElementById('cor-boca').value;
+  const APetName = document.getElementById('APetName').value;
 
   pyodide.globals.set("WIDTH", canvaWidth); // atualiza variáveis python
   pyodide.globals.set("HEIGHT", canvaHeight);
@@ -45,7 +49,7 @@ function criarAPet() {
                        positionX= WIDTH/2, 
                        positionY= HEIGHT - (HEIGHT/3), 
                        color="${corCorpo}", 
-                       name="js_name", 
+                       name="${APetName}", 
                        shape = "${formaCorpo}", 
                        eyeColor="${corOlhos}", 
                        mouthColor="${corBoca}")`);
@@ -62,7 +66,7 @@ function loopAPet() {
   pyodide.runPython("simular_em_loop()")
   
   const end = performance.now();
-  //console.log(`Execução do passo: ${Math.round(end - start)} ms`);
+  console.log(`Execução do passo: ${Math.round(end - start)} ms`);
 
   setTimeout(loopAPet, 20);
 }
