@@ -10,7 +10,7 @@ let canvaHeight;
 }*/
 
 function reforcar(magnitudeDeReforco=5){
-  if (Reflect.get(user, "moedas")>=magnitudeDeReforco5){
+  if (Reflect.get(user, "moedas")>=magnitudeDeReforco){
     pyodide.runPython(`
 magnitude_de_reforco = ${magnitudeDeReforco}
 agentAPet.consequence += magnitude_de_reforco
