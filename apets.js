@@ -8,10 +8,11 @@ function preloadAccessories(skins) {
 
 // Função principal que desenha um A-Pet
 function drawAPet(petData) {
-  //console.log(`${petData.color}\n${petData.shape}\n${petData.eyes}`)
   push();
   translate(petData.positionX, petData.positionY);
   
+  rotate(radians(petData.angleRad)); // Rotaciona o canvas em torno do ponto (x, y)
+
   // Desenhar corpo
   noStroke();
   fill(petData.color || "#cccccc");

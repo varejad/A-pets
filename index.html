@@ -109,7 +109,9 @@ responses = {("pular",):[5,10],
              ("esq",):[3,10],
              ("dir",):[3,10],
              ("entrar",):[0,1],
-             ("parado",):[1,10]}
+             ("parado",):[1,10],
+             ("girarEsq",):[5,10],
+             ("girarDir",):[5,10]}
 
 class Agents(Aprendente):
     def __init__(self, acoes, variar=False, prob_variacao=0.25, positionX = 0, positionY = 0, color="#000000", name = "", shape = "square", eyeColor="black", mouthColor="black"):
@@ -129,6 +131,7 @@ class Agents(Aprendente):
         self.xp = 0
         self.consequence = 0
         self.disposicao = 1000
+        self.angleRad = 0
     
     #def set_context(self):
         #context = ("sem contexto",)
@@ -150,6 +153,13 @@ class Agents(Aprendente):
           self.positionX = (self.positionX + 1) % WIDTH
         if self._acao_atual[0] == "parado":
           pass
+
+        if self._acao_atual[0] == "girarEsq":
+          self.angleRad = (self.angleRad - (90/(PASSOS_POR_SEGUNDO * 1.5))) % 360
+          self.positionX = (self.positionX - (60/(PASSOS_POR_SEGUNDO * 1.5))) % WIDTH
+        if self._acao_atual[0] == "girarDir":
+          self.angleRad = (self.angleRad + (90/(PASSOS_POR_SEGUNDO * 1.5))) % 360
+          self.positionX = (self.positionX + (60/(PASSOS_POR_SEGUNDO * 1.5))) % WIDTH
         
         if self._acao_atual[0] == "entrar": #NÃO FICOU LEGAL PQ SÓ DIMINUI O CORPO E NÃO DIMINUI O ROSTO
           if self.passos_restantes > (PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2))/2:
@@ -171,7 +181,7 @@ def simular_em_loop():
       agentAPet.mouthType = "flat"
       #context = agentAPet.set_context()
       agentAPet.proxima_acao(agentAPet.antecedente_atual)
-      agentAPet.passos_restantes = PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2) # 1seg e meio por ação
+      agentAPet.passos_restantes = PASSOS_POR_SEGUNDO * 1.5 # 1seg e meio por ação
 
   agentAPet.to_respond(agentAPet.antecedente_atual)
 
