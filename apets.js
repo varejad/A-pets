@@ -11,7 +11,7 @@ function drawAPet(petData) {
   push();
   translate(petData.positionX, petData.positionY);
   
-  rotate(radians(petData.angleRad)); // Rotaciona o canvas em torno do ponto (x, y)
+  rotate(radians(petData.angle)); // Rotaciona o canvas em torno do ponto (x, y)
 
   // Desenhar corpo
   noStroke();

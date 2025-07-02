@@ -14,7 +14,7 @@ function reforcar(magnitudeDeReforco=5){
     pyodide.runPython(`
 magnitude_de_reforco = ${magnitudeDeReforco}
 agentAPet.consequence += magnitude_de_reforco
-agentAPet.xp += magnitude_de_reforco
+agentAPet.pontucao_xp(magnitude_de_reforco)
 agentAPet.mouthType = "smile"
 user.moedas -= magnitude_de_reforco
 `)
@@ -121,12 +121,17 @@ function esconderAvisoReforco() {
 }
 
 function ganharReforcadores() {
-  pyodide.runPython(`user.moedas += 50`);
+  pyodide.runPython(`user.moedas += 100`);
   esconderAvisoReforco();
   atualizarInfos();
 
 }
+
 function atualizarInfos(){
   document.getElementById("moedas").textContent = `Moedas: ${Reflect.get(user, "moedas")}`
   document.getElementById("xp").textContent = `Experiencia: ${Reflect.get(agent, "xp")}`
+}
+
+function mostrarAvisoLevel() {
+  document.getElementById("avisoReforcoOverlay").style.display = "flex";
 }

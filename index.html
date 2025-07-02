@@ -93,6 +93,7 @@
 import micropip
 await micropip.install("behavioralflow")
 import time
+import js
 from behavioralflow.core import Aprendente
 
 PASSOS_POR_SEGUNDO = 20  # 1 segundo = 20 passos (com loop de 0.05s)
@@ -129,18 +130,20 @@ class Agents(Aprendente):
         self.mouthType = "flat"
         self.eyeType = "round"
         self.xp = 0
+        self.level = 0
         self.consequence = 0
         self.disposicao = 1000
-        self.angleRad = 0
+        self.angle = 0
     
     #def set_context(self):
         #context = ("sem contexto",)
         #return context
     
-    # Tentar executar as açoes
+    def pontucao_xp(self, pontos):
+        self.xp += pontos
+  
+    # Executa a ação atual
     def to_respond(self, context):
-
-        # Executa a ação atual
         if self._acao_atual[0] == "pular":
           if self.passos_restantes > (PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2))/2: # 1seg e meio por ação
             self.positionY = (self.positionY - 1) % HEIGHT
@@ -155,10 +158,10 @@ class Agents(Aprendente):
           pass
 
         if self._acao_atual[0] == "girarEsq":
-          self.angleRad = (self.angleRad - (90/(PASSOS_POR_SEGUNDO * 1.5))) % 360
+          self.angle = (self.angle - (90/(PASSOS_POR_SEGUNDO * 1.5))) % 360
           self.positionX = (self.positionX - (60/(PASSOS_POR_SEGUNDO * 1.5))) % WIDTH
         if self._acao_atual[0] == "girarDir":
-          self.angleRad = (self.angleRad + (90/(PASSOS_POR_SEGUNDO * 1.5))) % 360
+          self.angle = (self.angle + (90/(PASSOS_POR_SEGUNDO * 1.5))) % 360
           self.positionX = (self.positionX + (60/(PASSOS_POR_SEGUNDO * 1.5))) % WIDTH
         
         if self._acao_atual[0] == "entrar": #NÃO FICOU LEGAL PQ SÓ DIMINUI O CORPO E NÃO DIMINUI O ROSTO
@@ -170,7 +173,6 @@ class Agents(Aprendente):
     def set_consequence(self):
       if self.consequence != 0:
         self.reforcar(self.consequence)
-
 
 # Loop de simulação
 def simular_em_loop():
