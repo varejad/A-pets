@@ -133,5 +133,6 @@ function atualizarInfos(){
 }
 
 function mostrarAvisoLevel() {
+  console.log("vocÊ passou de nível")
   document.getElementById("avisoReforcoOverlay").style.display = "flex";
 }

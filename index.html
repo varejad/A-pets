@@ -141,7 +141,15 @@ class Agents(Aprendente):
     
     def pontucao_xp(self, pontos):
         self.xp += pontos
-  
+        a, b, c = 0, 1, 0
+        while a < (self.xp+30)/5:
+          a, b, c = b, a+b, c+1
+        if self.level < c-6:
+          self.level = c-6
+          print(self.level)
+          js.mostrarAvisoLevel()
+        
+        
     # Executa a ação atual
     def to_respond(self, context):
         if self._acao_atual[0] == "pular":
