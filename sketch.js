@@ -2,6 +2,8 @@ let skinsData;
 let agent;
 let canvaWidth;
 let canvaHeight;
+let tempoUltimoPasso = performance.now();
+let passoIntervalo; //= 1000 / 20; // 20 passos por segundo = 50ms por passo
 
 /*function preload() {
   skinsData = loadJSON("data/skins.json", () => {
@@ -81,17 +83,22 @@ function criarAPeteUser() {
   document.getElementById("nomeApet").textContent = `${APetName}`
   atualizarInfos();
 
+  passoIntervalo = 1000 / pyodide.globals.get("PASSOS_POR_SEGUNDO"); // 20 passos por segundo = 50ms por passo
   loopAPet();
 }
 
 function loopAPet() {
-  const start = performance.now();
-  pyodide.runPython("simular_em_loop()")
-  
-  const end = performance.now();
+  const agora = performance.now();
+  const delta = agora - tempoUltimoPasso;
+  if (delta >= passoIntervalo) {
+    pyodide.runPython("simular_em_loop()");
+    tempoUltimoPasso = agora;
+  }
+  //const start = performance.now();
+  //const end = performance.now();
   //console.log(`Execução do passo: ${Math.round(end - start)} ms`);
 
-  setTimeout(loopAPet, 20);
+  setTimeout(loopAPet, 5);
 }
 
 
