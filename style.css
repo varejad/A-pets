@@ -1,0 +1,189 @@
+:root {
+  --cor-primaria: #6EC1E4;
+  --cor-secundaria: #9E7BB5;
+  --cor-suporte: #7ED6A2;
+  --cor-aviso-positivo: #FFDD6E;
+  --cor-aviso-negativo: #FF6B6B;
+  --texto-escuro: #2E2E2E;
+  --fundo-claro: #FAFAFA;
+  --neutro: #EAEAEA;
+
+  --espacamento: 1rem;
+  --raio-borda: 0.5rem;
+  --fonte-principal: 'Segoe UI', sans-serif;
+}
+
+/* Reset básico */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Corpo da página */
+body {
+  font-family: var(--fonte-principal);
+  background-color: var(--fundo-claro);
+  color: var(--texto-escuro);
+  padding: var(--espacamento);
+  line-height: 1.5;
+}
+
+/* Container principal */
+main {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Indicador de carregamento */
+#loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+/* Informações do A-pet */
+#infos {
+  background-color: var(--neutro);
+  padding: var(--espacamento);
+  border-radius: var(--raio-borda);
+  margin-bottom: var(--espacamento);
+}
+
+#infos p {
+  margin-bottom: 0.5rem;
+}
+
+/* Área de simulação */
+#simContainer {
+  background-color: white;
+  border: 2px solid var(--neutro);
+  border-radius: var(--raio-borda);
+  padding: 0.5rem;
+  margin-bottom: var(--espacamento);
+}
+
+/* Customização */
+#customizacao {
+  background-color: white;
+  padding: var(--espacamento);
+  border-radius: var(--raio-borda);
+  border: 1px solid var(--neutro);
+  margin-bottom: var(--espacamento);
+}
+
+#customizacao label {
+  display: block;
+  margin-top: 0.75rem;
+  font-weight: bold;
+}
+
+#customizacao input[type="text"],
+#customizacao select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--neutro);
+  border-radius: var(--raio-borda);
+  margin-top: 0.25rem;
+}
+
+#customizacao input[type="color"] {
+  margin-left: 0.5rem;
+}
+
+#customizacao button {
+  margin-top: 1rem;
+  width: 100%;
+  background-color: var(--cor-suporte);
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: var(--raio-borda);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#customizacao button:hover {
+  background-color: #69c48d;
+}
+
+/* Instruções e controles */
+#controls {
+  margin-top: var(--espacamento);
+}
+
+#instrucao,
+#botoesReP {
+  margin-bottom: var(--espacamento);
+}
+
+#instrucao label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+#inputInstrucao {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--neutro);
+  border-radius: var(--raio-borda);
+  margin-bottom: 0.5rem;
+}
+
+#instrucao button,
+#botoesReP button {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: var(--raio-borda);
+  cursor: pointer;
+  margin-right: 0.5rem;
+}
+
+#botoesReP button:first-child {
+  background-color: var(--cor-suporte);
+  color: white;
+}
+
+#botoesReP button:last-child {
+  background-color: var(--cor-aviso-negativo);
+  color: white;
+}
+
+/* Modal de reforço */
+#avisoReforcoOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#avisoReforco {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--raio-borda);
+  text-align: center;
+  border: 2px solid var(--cor-aviso-negativo);
+  max-width: 300px;
+}
+
+#avisoReforco button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--cor-primaria);
+  color: white;
+  border: none;
+  border-radius: var(--raio-borda);
+  cursor: pointer;
+}
+
+#avisoReforco button:hover {
+  background-color: #5da8c9;
+}
