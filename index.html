@@ -15,9 +15,10 @@
 
     <div id="main" style="display: none;">
       <div id="infos">
-        <p id="nomeApet">Nome do seu A-pet: </p>
-        <p id="xp">Experiencia: </p>
-        <p id="moedas">moedas: </p>
+        <p id="nomeAPet">Nome do seu A-pet: <span id="spanNomeAPet"></span></p>
+        <p id="xp">Experiencia: <span id="spanXp"></span></p>
+        <p id="moedas">Moedas: <span id="spanMoedas"></span></p>
+        <p id="nivel">Nível: <span id="spanNivel"></span></p>
       </div>
       <div id="simContainer">
         <!-- O canvas será criado e inserido aqui pelo p5.js -->
@@ -96,7 +97,9 @@ import time
 import js
 from behavioralflow.core import Aprendente
 
-PASSOS_POR_SEGUNDO = 20  # 1 segundo = 20 passos (com loop de 0.05s)
+PASSOS_POR_SEGUNDO = 30
+DURACAO_ACAO_SEGUNDOS = 1
+PASSOS_POR_ACAO = int(PASSOS_POR_SEGUNDO * DURACAO_ACAO_SEGUNDOS)
 
 WIDTH = 400
 HEIGHT = 400
@@ -153,7 +156,7 @@ class Agents(Aprendente):
     # Executa a ação atual
     def to_respond(self, context):
         if self._acao_atual[0] == "pular":
-          if self.passos_restantes > (PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2))/2: # 1seg e meio por ação
+          if self.passos_restantes > PASSOS_POR_ACAO/2:
             self.positionY = (self.positionY - 1) % HEIGHT
           else:
             self.positionY = (self.positionY + 1) % HEIGHT
@@ -166,14 +169,14 @@ class Agents(Aprendente):
           pass
 
         if self._acao_atual[0] == "girarEsq":
-          self.angle = (self.angle - (90/(PASSOS_POR_SEGUNDO * 1.5))) % 360
-          self.positionX = (self.positionX - (60/(PASSOS_POR_SEGUNDO * 1.5))) % WIDTH
+          self.angle = (self.angle - (90/PASSOS_POR_ACAO)) % 360
+          self.positionX = (self.positionX - (60/PASSOS_POR_ACAO)) % WIDTH
         if self._acao_atual[0] == "girarDir":
-          self.angle = (self.angle + (90/(PASSOS_POR_SEGUNDO * 1.5))) % 360
-          self.positionX = (self.positionX + (60/(PASSOS_POR_SEGUNDO * 1.5))) % WIDTH
+          self.angle = (self.angle + (90/PASSOS_POR_ACAO)) % 360
+          self.positionX = (self.positionX + (60/PASSOS_POR_ACAO)) % WIDTH
         
         if self._acao_atual[0] == "entrar": #NÃO FICOU LEGAL PQ SÓ DIMINUI O CORPO E NÃO DIMINUI O ROSTO
-          if self.passos_restantes > (PASSOS_POR_SEGUNDO + (PASSOS_POR_SEGUNDO/2))/2:
+          if self.passos_restantes > PASSOS_POR_ACAO/2:
             self.size -= 1
           else:
             self.size += 1
@@ -191,7 +194,7 @@ def simular_em_loop():
       agentAPet.mouthType = "flat"
       #context = agentAPet.set_context()
       agentAPet.proxima_acao(agentAPet.antecedente_atual)
-      agentAPet.passos_restantes = PASSOS_POR_SEGUNDO * 1.5 # 1seg e meio por ação
+      agentAPet.passos_restantes = PASSOS_POR_ACAO 
 
   agentAPet.to_respond(agentAPet.antecedente_atual)
 

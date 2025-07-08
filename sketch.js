@@ -3,7 +3,7 @@ let agent;
 let canvaWidth;
 let canvaHeight;
 let tempoUltimoPasso = performance.now();
-let passoIntervalo; //= 1000 / 20; // 20 passos por segundo = 50ms por passo
+let passoIntervalo;
 
 /*function preload() {
   skinsData = loadJSON("data/skins.json", () => {
@@ -80,7 +80,7 @@ function criarAPeteUser() {
   user = pyodide.globals.get("user")
   document.getElementById("customizacao").style.display = "none";   // esconde a div de customização
   document.getElementById("controls").style.display = "block";
-  document.getElementById("nomeApet").textContent = `${APetName}`
+  document.getElementById("nomeAPet").textContent = `${APetName}`
   atualizarInfos();
 
   passoIntervalo = 1000 / pyodide.globals.get("PASSOS_POR_SEGUNDO"); // 20 passos por segundo = 50ms por passo
@@ -98,6 +98,7 @@ function loopAPet() {
   //const end = performance.now();
   //console.log(`Execução do passo: ${Math.round(end - start)} ms`);
 
+  //requestAnimationFrame(loopAPet);
   setTimeout(loopAPet, 5);
 }
 
@@ -135,8 +136,10 @@ function ganharReforcadores() {
 }
 
 function atualizarInfos(){
-  document.getElementById("moedas").textContent = `Moedas: ${Reflect.get(user, "moedas")}`
-  document.getElementById("xp").textContent = `Experiencia: ${Reflect.get(agent, "xp")}`
+  document.getElementById("spanMoedas").textContent = `${Reflect.get(user, "moedas")}`
+  document.getElementById("spanXp").textContent = `${Reflect.get(agent, "xp")}`
+  document.getElementById("spanNivel").textContent = `${Reflect.get(agent, "level")}`
+
 }
 
 function mostrarAvisoLevel() {
