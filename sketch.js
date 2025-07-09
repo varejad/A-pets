@@ -102,7 +102,6 @@ function loopAPet() {
   setTimeout(loopAPet, 5);
 }
 
-
 function setup() {
   canvaWidth = Math.min(windowWidth - 10, 600);
   canvaHeight = Math.min(windowHeight/2, 800);
@@ -135,7 +134,7 @@ function ganharReforcadores() {
 
 }
 
-function atualizarInfos(){
+function atualizarInfos(){ 
   document.getElementById("spanMoedas").textContent = `${Reflect.get(user, "moedas")}`
   document.getElementById("spanXp").textContent = `${Reflect.get(agent, "xp")}`
   document.getElementById("spanNivel").textContent = `${Reflect.get(agent, "level")}`

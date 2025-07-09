@@ -13,6 +13,14 @@
       <p>Carregando... por favor, aguarde</p>
     </div>
 
+    <!-- Tutorial Overlay -->
+    <div id="tutorialOverlay" style="display: none;">
+      <div id="tutorialBox">
+        <p id="tutorialText"></p>
+        <button id="botaoTutorial" onclick="avancarTutorial()">Avançar</button>
+      </div>
+    </div>
+
     <div id="main" style="display: none;">
       <div id="infos">
         <p id="nomeAPet">Nome do seu A-pet: <span id="spanNomeAPet"></span></p>
@@ -107,6 +115,7 @@ HEIGHT = 400
 class User():
     def __init__(self):
         self.moedas = 100
+        self.novoJogador = True
 
 responses = {("pular",):[5,10],
              ("pegar",):[0,1],
@@ -212,6 +221,11 @@ def simular_em_loop():
       // Tudo carregado — esconder "Carregando..." e mostrar botão de iniciar
       document.getElementById("loading").style.display = "none";
       document.getElementById("main").style.display = "block";
+
+      // Mostrar tutorial automaticamente na primeira vez, depois do pyodide carregar
+      if (!localStorage.getItem("tutorialVisto")) {
+        iniciarTutorial();
+      }
     }
 
     init();
@@ -219,6 +233,7 @@ def simular_em_loop():
   </script>
 
   <script src="utils/translations.js"></script>
+  <script src="utils/tutorial.js"></script>
   <script src="sketch.js"></script>
   <script src="apets.js"></script>
   
