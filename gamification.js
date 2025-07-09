@@ -40,17 +40,17 @@ function atualizarInfos(){
 
 function mostrarAvisoLevel() {
   const mensagem = {
-    1: "🎉 Nível 1: Você pode personalizar as cores do seu A-pet!",
+    1: "🎉 PARABÉNS! Seu A-Pet chegou ao NÍVEL 1: Você desbloqueou o botão de punição, use esse botão quando seu A-Pet fizer algo que você não quer que ele faça mais!",
     2: "🎉 Nível 2: Agora você pode escolher o nome do seu A-pet!",
-    3: "🎉 Nível 3: A opção de punição está desbloqueada!",
+    3: "🎉 Nível 3: Agora chegou a hora de customizar seu A-Pet do jeito que quiser",
     4: "🎉 Nível 4: Agora você pode dar instruções ao seu A-pet!"
   };
 
   const proximo = {
-    1: "Próximo nível: dar nome ao A-pet.",
-    2: "Próximo nível: desbloqueia punição.",
+    1: "No próximo nível você poderá dar um nome ao seu A-pet.",
+    2: "No próximo nível você poderá customizar seu A-pet do seu jeito!",
     3: "Próximo nível: desbloqueia instruções.",
-    4: "Você desbloqueou tudo! 🎉"
+    4: "Você desbloqueou tudo por enquanto! Fique de olho nas novidades 🎉"
   };
 
   document.getElementById("mensagemNivel").innerHTML = `
@@ -90,20 +90,24 @@ function esconderAvisoLevel(){
 }
 
 function atualizarDesbloqueios(level) {
+  console.log(level)
   if (level >= 1) {
+    document.querySelector("button[onclick='punir()']").style.display = "block";
+    console.log("lvl1")
+  }
+
+  if (level >= 2) {
+    // document.getElementById("APetName").style.display = "block";
+    console.log("lvl2")
+  }
+
+  if (level == 3) {
     document.getElementById("customizacao").style.display = "block";
     document.getElementById("cor-corpo").style.display = "block";
     document.getElementById("cor-olhos").style.display = "block";
     document.getElementById("cor-boca").style.display = "block";
     document.getElementById("forma-corpo").style.display = "block";
-  }
-
-  if (level >= 2) {
-    // document.getElementById("APetName").style.display = "block";
-  }
-
-  if (level >= 3) {
-    document.querySelector("button[onclick='punir()']").style.display = "block";
+    console.log("lvl3")
   }
 
   if (level >= 4) {
@@ -123,4 +127,5 @@ function bloquearTudoInicialmente() {
   document.getElementById("inputInstrucao").style.display = "none" 
   document.querySelector("button[onclick='punir()']").style.display = "none" 
   document.querySelector("button[onclick='enviarInstrucao()']").style.display = "none" 
+  console.log("bloq")
 }
