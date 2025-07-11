@@ -88,7 +88,8 @@ function drawMouth(petData) {
   } else if (type === "o") {
     ellipse(0, 10, 5, 5);
   } else if (type === "flat") {
-    line(-5, 10, 5, 10);
+    noFill();
+    arc(0, 10, 10, 5, 0, PI);
   }
 }
 

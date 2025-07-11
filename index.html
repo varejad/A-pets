@@ -23,10 +23,14 @@
 
     <div id="main" style="display: none;">
       <div id="infos">
-        <p id="nomeAPet"><b>A-pet sem nome </b><span id="spanNomeAPet"></span></p>
-        <p id="xp">Experiencia: <span id="spanXp"></span></p>
-        <p id="moedas">Moedas: <span id="spanMoedas"></span></p>
-        <p id="nivel">Nível: <span id="spanNivel"></span></p>
+        <div id="nome">
+          <p id="nomeAPet"><b>A-pet sem nome </b><span id="spanNomeAPet"></span></p>
+        </div>
+        <div id="maisInfo">
+          <p id="xp">Experiencia: <span id="spanXp"></span></p>
+          <p id="moedas">Moedas: <span id="spanMoedas"></span></p>
+          <p id="nivel">Nível: <span id="spanNivel"></span></p>
+        </div>
       </div>
       <div id="simContainer">
         <!-- O canvas será criado e inserido aqui pelo p5.js -->
@@ -39,6 +43,12 @@
         <label for="cor-corpo">Cor do corpo:</label>
         <input type="color" id="cor-corpo" name="cor-corpo" value="#d4a268">
 
+        <label for="cor-olhos">Cor dos olhos:</label>
+        <input type="color" id="cor-olhos" name="cor-olhos" value="#6d3d1c">
+        
+        <label for="cor-boca">Cor da boca:</label>
+        <input type="color" id="cor-boca" name="cor-boca" value="#bb5d5d">
+
         <label for="forma-corpo">Forma do corpo:</label>
         <select id="forma-corpo" name="forma-corpo">
         <option value="square">Quadrado</option>
@@ -46,13 +56,6 @@
         <!-- <option value="triangle">Triângulo</option> -->
         </select>
 
-        <label for="cor-olhos">Cor dos olhos:</label>
-        <input type="color" id="cor-olhos" name="cor-olhos" value="#6d3d1c">
-
-        <label for="cor-boca">Cor da boca:</label>
-        <input type="color" id="cor-boca" name="cor-boca" value="#bb5d5d">
-
-        <br><br>
         <button onclick="customizar()">Custimozar</button>
       </div>
 

@@ -48,10 +48,27 @@ main {
   padding: var(--espacamento);
   border-radius: var(--raio-borda);
   margin-bottom: var(--espacamento);
+
 }
 
 #infos p {
   margin-bottom: 0.5rem;
+
+}
+#infos #maisInfo {
+    display: flex; /* Transforma a div 'maisInfos' em um container flexível */
+    gap: 1rem; /* Adiciona um espaço entre os itens filhos (opcional, mas recomendado) */
+    /* Você pode adicionar outras propriedades Flexbox aqui, se precisar: */
+    justify-content: space-around; /* Distribui o espaço entre os itens */
+    /* align-items: center; */ /* Alinha os itens verticalmente no centro */
+}
+
+/* Centralizando o texto dentro do parágrafo */
+#nomeAPet {
+    text-align: center; /* Centraliza o texto horizontalmente */
+    font-size: 1.8rem;  /* Aumenta o tamanho da fonte para destacar */
+    color: #333;        /* Define uma cor de texto mais escura para melhor contraste */
+    margin-bottom: 1rem; /* Adiciona um pouco de espaço abaixo do parágrafo */
 }
 
 /* Área de simulação */
@@ -70,6 +87,7 @@ main {
   border-radius: var(--raio-borda);
   border: 1px solid var(--neutro);
   margin-bottom: var(--espacamento);
+  display: flex;
 }
 
 #customizacao label {

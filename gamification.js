@@ -124,7 +124,7 @@ function bloquearTudoInicialmente() {
   document.getElementById("cor-boca").style.display = "none" 
   document.getElementById("forma-corpo").style.display = "none" 
   //document.getElementById("APetName").style.display = "none" 
-  document.getElementById("inputInstrucao").style.display = "none" 
+  document.getElementById("instrucao").style.display = "none" 
   document.querySelector("button[onclick='punir()']").style.display = "none" 
   document.querySelector("button[onclick='enviarInstrucao()']").style.display = "none" 
   console.log("bloq")
