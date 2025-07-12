@@ -40,10 +40,10 @@ function atualizarInfos(){
 
 function mostrarAvisoLevel() {
   const mensagem = {
-    1: "🎉 PARABÉNS! Seu A-Pet chegou ao NÍVEL 1: Você desbloqueou o botão de punição, use esse botão quando seu A-Pet fizer algo que você não quer que ele faça mais!",
-    2: "🎉 Nível 2: Agora você pode escolher o nome do seu A-pet!",
-    3: "🎉 Nível 3: Agora chegou a hora de customizar seu A-Pet do jeito que quiser",
-    4: "🎉 Nível 4: Agora você pode dar instruções ao seu A-pet!"
+    1: "🎉 PARABÉNS! Seu A-Pet chegou ao NÍVEL 1<br><br> Você desbloqueou o botão de punição, use esse botão quando seu A-Pet fizer algo que você não quer que ele faça mais!",
+    2: "🎉 PARABÉNS! Seu A-Pet chegou ao NÍVEL 2<br><br>Agora você pode escolher o nome do seu A-pet!",
+    3: "🎉 PARABÉNS! Seu A-Pet chegou ao NÍVEL 3<br><br> Agora chegou a hora de customizar seu A-Pet do jeito que quiser",
+    4: "🎉 PARABÉNS! Seu A-Pet chegou ao NÍVEL 4<br><br> Agora você pode dar instruções ao seu A-pet!"
   };
 
   const proximo = {
@@ -119,14 +119,8 @@ function atualizarDesbloqueios(level) {
 }
 
 function bloquearTudoInicialmente() {
-  document.getElementById("customizacao").style.display = "none" 
-  // document.getElementById("cor-corpo").style.display = "none" 
-  // document.getElementById("cor-olhos").style.display = "none" 
-  // document.getElementById("cor-boca").style.display = "none" 
-  // document.getElementById("forma-corpo").style.display = "none" 
-  //document.getElementById("APetName").style.display = "none" 
+  document.getElementById("customizacao").style.display = "none"  
   document.getElementById("instrucao").style.display = "none" 
   document.querySelector("button[onclick='punir()']").style.display = "none" 
-  //document.querySelector("button[onclick='enviarInstrucao()']").style.display = "none" 
   console.log("bloq")
 }

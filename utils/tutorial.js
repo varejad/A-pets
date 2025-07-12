@@ -1,10 +1,7 @@
 const etapasTutorial = [
-  "Este é seu A-pet! Ele aprende com você.",
-  "Você pode recompensar ações clicando no botão 'Recompensa'.",
-  "Tente clicar em 'Recompensa' para ensinar algo.",
-  "Ótimo! O A-pet está aprendendo com você.",
-  "Você também pode dar instruções clicando em 'Enviar'.",
-  "Agora você está pronto para começar sua jornada!"
+  "Bem-vindo ao A-pet! \n\n Você acaba de ganhar seu A-pet, uma criaturinha que adora ganhar recompensas e vai fazer tudo para ganhar mais!",
+  "Você pode usar isso para treina-lo a fazer o que você quiser.\n\n Quando ele fizer algo legal, clique em 'Recompensa' e ele vai fazer isso mais vezes!",
+  "Quanto mais você ensinar mais coisas ele poderá fazer, em breve você poderá dar um nome, mudar a aparência, ensinar instruções e muito mais"
 ];
 
 let etapaAtual = 0;
