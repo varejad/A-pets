@@ -87,7 +87,12 @@ main {
   border-radius: var(--raio-borda);
   border: 1px solid var(--neutro);
   margin-bottom: var(--espacamento);
+}
+
+#inputsCustomizacao{
   display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 #customizacao label {
@@ -132,7 +137,11 @@ main {
 
 #instrucao,
 #botoesReP {
+  display: flex;
   margin-bottom: var(--espacamento);
+  gap: 1rem;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 #instrucao label {

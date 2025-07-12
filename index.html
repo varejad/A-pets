@@ -37,26 +37,33 @@
       </div>
       
       <div id="customizacao" >
-        <!-- <label for="agentName">Nome do seu A-pet:</label>
-        <input type="text" id="APetName" placeholder="Digite um nome"> -->
-
-        <label for="cor-corpo">Cor do corpo:</label>
-        <input type="color" id="cor-corpo" name="cor-corpo" value="#d4a268">
-
-        <label for="cor-olhos">Cor dos olhos:</label>
-        <input type="color" id="cor-olhos" name="cor-olhos" value="#6d3d1c">
+        <div id="inputsCustomizacao">
+          <div>
+            <label for="cor-corpo">Cor do corpo:</label>
+            <input type="color" id="cor-corpo" name="cor-corpo" value="#d4a268" onchange="customizar()">
+          </div>
         
-        <label for="cor-boca">Cor da boca:</label>
-        <input type="color" id="cor-boca" name="cor-boca" value="#bb5d5d">
+          <div>
+            <label for="cor-olhos">Cor dos olhos:</label>
+            <input type="color" id="cor-olhos" name="cor-olhos" value="#6d3d1c" onchange="customizar()">
+          </div>
+        
+          <div>
+            <label for="cor-boca">Cor da boca:</label>
+            <input type="color" id="cor-boca" name="cor-boca" value="#bb5d5d" onchange="customizar()">
+          </div>
 
-        <label for="forma-corpo">Forma do corpo:</label>
-        <select id="forma-corpo" name="forma-corpo">
-        <option value="square">Quadrado</option>
-        <option value="circle">Círculo</option>
-        <!-- <option value="triangle">Triângulo</option> -->
-        </select>
-
-        <button onclick="customizar()">Custimozar</button>
+          <div>
+            <label for="forma-corpo">Forma do corpo:</label>
+            <select id="forma-corpo" name="forma-corpo" onchange="customizar()">
+            <option value="square">Quadrado</option>
+            <option value="circle">Círculo</option>
+            <!-- <option value="triangle">Triângulo</option> -->
+            </select>
+          </div>
+        </div>
+        
+        <button onclick="customizar(); document.getElementById('customizacao').style.display = 'none';   // esconde a div de customização">Custimozar</button>
       </div>
 
       <div id="controls">

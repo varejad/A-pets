@@ -11,7 +11,7 @@ function customizar(){
     agentAPet.mouthColor="${corBoca}"
     `);
 
-  document.getElementById("customizacao").style.display = "none";   // esconde a div de customização
+  //document.getElementById("customizacao").style.display = "none";   // esconde a div de customização
   
   atualizarInfos();
 }
@@ -102,11 +102,11 @@ function atualizarDesbloqueios(level) {
   }
 
   if (level == 3) {
-    document.getElementById("customizacao").style.display = "block";
-    document.getElementById("cor-corpo").style.display = "block";
-    document.getElementById("cor-olhos").style.display = "block";
-    document.getElementById("cor-boca").style.display = "block";
-    document.getElementById("forma-corpo").style.display = "block";
+    //document.getElementById("customizacao").style.display = "block";
+    // document.getElementById("cor-corpo").style.display = "block";
+    // document.getElementById("cor-olhos").style.display = "block";
+    // document.getElementById("cor-boca").style.display = "block";
+    // document.getElementById("forma-corpo").style.display = "block";
     console.log("lvl3")
   }
 
@@ -118,11 +118,11 @@ function atualizarDesbloqueios(level) {
 }
 
 function bloquearTudoInicialmente() {
-  document.getElementById("customizacao").style.display = "none" 
-  document.getElementById("cor-corpo").style.display = "none" 
-  document.getElementById("cor-olhos").style.display = "none" 
-  document.getElementById("cor-boca").style.display = "none" 
-  document.getElementById("forma-corpo").style.display = "none" 
+  //document.getElementById("customizacao").style.display = "none" 
+  // document.getElementById("cor-corpo").style.display = "none" 
+  // document.getElementById("cor-olhos").style.display = "none" 
+  // document.getElementById("cor-boca").style.display = "none" 
+  // document.getElementById("forma-corpo").style.display = "none" 
   //document.getElementById("APetName").style.display = "none" 
   document.getElementById("instrucao").style.display = "none" 
   document.querySelector("button[onclick='punir()']").style.display = "none" 
