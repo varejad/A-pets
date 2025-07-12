@@ -102,7 +102,7 @@ function atualizarDesbloqueios(level) {
   }
 
   if (level == 3) {
-    //document.getElementById("customizacao").style.display = "block";
+    document.getElementById("customizacao").style.display = "block";
     // document.getElementById("cor-corpo").style.display = "block";
     // document.getElementById("cor-olhos").style.display = "block";
     // document.getElementById("cor-boca").style.display = "block";
@@ -111,14 +111,15 @@ function atualizarDesbloqueios(level) {
   }
 
   if (level >= 4) {
-    document.getElementById("inputInstrucao").style.display = "block";
-    document.querySelector("button[onclick='enviarInstrucao()']").style.display = "block";
+    document.getElementById("instrucao").style.display = "flex"
+    //document.getElementById("inputInstrucao").style.display = "block";
+    //document.querySelector("button[onclick='enviarInstrucao()']").style.display = "block";
     console.log("nivel 4")
   }
 }
 
 function bloquearTudoInicialmente() {
-  //document.getElementById("customizacao").style.display = "none" 
+  document.getElementById("customizacao").style.display = "none" 
   // document.getElementById("cor-corpo").style.display = "none" 
   // document.getElementById("cor-olhos").style.display = "none" 
   // document.getElementById("cor-boca").style.display = "none" 
@@ -126,6 +127,6 @@ function bloquearTudoInicialmente() {
   //document.getElementById("APetName").style.display = "none" 
   document.getElementById("instrucao").style.display = "none" 
   document.querySelector("button[onclick='punir()']").style.display = "none" 
-  document.querySelector("button[onclick='enviarInstrucao()']").style.display = "none" 
+  //document.querySelector("button[onclick='enviarInstrucao()']").style.display = "none" 
   console.log("bloq")
 }
