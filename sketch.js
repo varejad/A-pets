@@ -4,7 +4,7 @@ let canvaWidth;
 let canvaHeight;
 let tempoUltimoPasso = performance.now();
 let passoIntervalo;
-let gameState = "faixa";
+let gameState = "default";
 let faixaIniciada = false;
 
 /*function preload() {
