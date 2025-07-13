@@ -117,7 +117,7 @@ function atualizarDesbloqueios(level) {
 
 function bloquearTudoInicialmente() {
   document.getElementById("customizacao").style.display = "none" 
-  document.getElementById("exibirIcones").style.display = "none"  
+  //document.getElementById("exibirIcones").style.display = "none"  
   document.getElementById("instrucao").style.display = "none" 
   document.querySelector("button[onclick='punir()']").style.display = "none" 
   console.log("bloq")
@@ -133,5 +133,15 @@ function toggle(div, display){
       document.getElementById('botaoIcones').textContent = '🔽';
     } else{document.getElementById('botaoIcones').textContent = '🔼'}
   }
+}
 
+function alternarIdioma() {
+  console.log("🔁 Alternar idioma (ainda será implementado)");
+  alert("Alternar idioma será implementado em breve.");
+}
+
+function resetarAPet() {
+  if (confirm("Tem certeza que deseja resetar seu A-pet?")) {
+    location.reload(); // Simples por enquanto, reinicia tudo
+  }
 }

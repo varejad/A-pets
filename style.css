@@ -130,6 +130,18 @@ main {
   background-color: #69c48d;
 }
 
+#icones{
+  display: none;
+  white-space: nowrap;
+  overflow-x: auto;
+  gap: 1rem;
+  /* padding: var(--espacamento); */
+  background-color: white;
+  border: 2px solid var(--neutro);
+  border-radius: var(--raio-borda);
+  margin-bottom: 0.25rem;
+}
+
 /* Instruções e controles */
 #controls {
   margin-top: var(--espacamento);
@@ -148,7 +160,7 @@ main {
 #instrucao label {
   font-weight: bold;
   display: block;
-  margin-bottom: 0.25rem;
+  /* margin-bottom: 0.25rem; */
 }
 
 #inputInstrucao {

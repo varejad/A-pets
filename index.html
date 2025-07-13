@@ -75,7 +75,9 @@
             <button id="botaoInstrucao" onclick="enviarInstrucao()">Enviar</button>
         </div>
 
-        <div id="icones" style="display: none; white-space: nowrap; overflow-x: auto;">
+        <div id="icones">
+          <p id="iconeConfig" style="font-size: 1.8rem; display: block;" onclick="toggle('configModalOverlay', 'flex')">⚙️</p>
+          <p id="iconeLoja" style="font-size: 1.8rem; display: block;" onclick="alert('Em breve você poderá usar suas moedas para comprar skins, acessórios, brinquedos e mais')">🛒</p>
           <p id="iconeCustomizacao" style="font-size: 1.8rem; display: none;" onclick="toggle('customizacao', 'block')">🎨</p>
           <p id="iconeInstrucao" style="font-size: 1.8rem; display: none;" onclick="toggle('inputInstrucao', 'flex');toggle('botaoInstrucao', 'flex')">🗣️</p>
         </div>
@@ -102,7 +104,7 @@
       z-index: 999; align-items: center; justify-content: center; display: none; ">
   
       <div id="avisoReforco" style="background: white; border: 2px solid #c00; padding: 2em; text-align: center; max-width: 300px;">
-        <p style="margin-bottom: 1em;">⚠️ Você não tem reforçadores suficientes!</p>
+        <p style="margin-bottom: 1em;">⚠️ Você não tem moedas suficientes!</p>
         <button onclick="ganharReforcadores()">Ganhar mais</button>
         <br><br>
         <button onclick="esconderAvisoReforco()">Fechar</button>
@@ -117,6 +119,22 @@
         <input id="inputNome" type="text" placeholder="Digite o nome do A-pet"
            style="display: none; margin-top: 10px; padding: 5px;" />
         <button onclick="esconderAvisoLevel()">OK</button>
+      </div>
+    </div>
+
+    <!-- Modal de configurações -->
+    <div id="configModalOverlay" style="position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5);
+      display: none; align-items: center; justify-content: center;
+      z-index: 999;">
+      <div id="configModal" style="background: white; padding: 1.5em;
+        border-radius: 10px; width: 300px; box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        text-align: center;">
+    
+        <h3>⚙️ Configurações</h3>
+        <button onclick="alternarIdioma()">🌍 Idioma/Language</button><br><br>
+        <button onclick="resetarAPet()">♻️ Resetar A-pet</button><br><br>
+        <button onclick="toggle('configModalOverlay', 'flex')">Fechar</button>
       </div>
     </div>
   </main>
