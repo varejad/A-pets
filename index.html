@@ -28,7 +28,7 @@
         </div>
         <div id="maisInfo">
           <p id="xp">Experiencia: <span id="spanXp"></span></p>
-          <p id="moedas">Moedas: <span id="spanMoedas"></span></p>
+          <p id="moedas">🪙 <span id="spanMoedas"></span></p>
           <p id="nivel">Nível: <span id="spanNivel"></span></p>
         </div>
       </div>
@@ -81,6 +81,9 @@
           <p id="iconeLoja" style="font-size: 1.8rem; display: block;" onclick="alert('Em breve você poderá usar suas moedas para comprar skins, acessórios, brinquedos e mais')">🛒</p>
           <p id="iconeCustomizacao" style="font-size: 1.8rem; display: none;" onclick="toggle('customizacao', 'block')">🎨</p>
           <p id="iconeInstrucao" style="font-size: 1.8rem; display: none;" onclick="toggle('inputInstrucao', 'flex');toggle('botaoInstrucao', 'flex');toggle('instrucoesConhecidas', 'flex')">🗣️</p>
+          <p id="iconeFaixa" style="font-size: 1.8rem; display: block;" onclick="gameState = 'faixa';">🛣️</p>
+          <p id="iconeDefault" style="font-size: 1.8rem; display: block;" onclick="gameState = 'default'; faixaIniciada = false;">🏠</p>
+          <!-- COLOCAR ICONES DE FAIXA E CASA COMO DISPLAY: NONE -->
         </div>
 
         <div style="display: flex;">
@@ -286,6 +289,7 @@ def simular_em_loop():
   <script src="sketch.js"></script>
   <script src="gamification.js"></script>
   <script src="apets.js"></script>
+  <script src="ambientes/ambienteFaixa.js"></script>
   
   <!-- 
   Guardar memória local 

@@ -113,14 +113,17 @@ function atualizarDesbloqueios(level) {
     document.getElementById("iconeInstrucao").style.display = "block"
     console.log("nivel 4")
   }
+
+  if (level >= 5){
+    document.getElementById("iconeFaixa").style.display = "block"
+    document.getElementById("iconeDefault").style.display = "block"
+  }
 }
 
 function bloquearTudoInicialmente() {
   document.getElementById("customizacao").style.display = "none" 
-  //document.getElementById("exibirIcones").style.display = "none"  
   document.getElementById("instrucao").style.display = "none" 
   document.querySelector("button[onclick='punir()']").style.display = "none" 
-  console.log("bloq")
 }
 
 function toggle(div, display){

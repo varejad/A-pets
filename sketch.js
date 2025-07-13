@@ -4,6 +4,8 @@ let canvaWidth;
 let canvaHeight;
 let tempoUltimoPasso = performance.now();
 let passoIntervalo;
+let gameState = "faixa";
+let faixaIniciada = false;
 
 /*function preload() {
   skinsData = loadJSON("data/skins.json", () => {
@@ -145,6 +147,16 @@ function draw() {
   if (!agent || agent.length === 0) {
     return;
   }
-drawCenario();
+
+  if (gameState === "default") {
+    drawCenario();
+  } else if (gameState === "faixa") {
+    if (!faixaIniciada) {
+      setupFaixa();
+      faixaIniciada = true;
+    }
+    drawFaixaAmbiente();
+  }
+
 drawAPet(agent);
 }
