@@ -52,27 +52,13 @@ function enviarInstrucao() {
   const instrucao = document.getElementById("inputInstrucao").value;
   pyodide.runPython(`agentAPet.antecedente_atual = ("${instrucao}",)`);
   document.getElementById("labelInputInstrucao").textContent = `Instrução atual: ${instrucao}`
+  document.getElementById("inputInstrucao").style.display = 'none';
+  document.getElementById("botaoInstrucao").style.display = 'none';
 
-  // PARAR DE EXIBIR O ELEMENTO DA INSTRUÇÃO E MOSTRAR A INSTRUÇÃO ATUAL E UM BOTÃO PARA FAZER REAPARECER OS ELEMENTOS DE INSTRUÇÃO
+
+
+  //  MOSTRAR A INSTRUÇÃO ATUAL
 }
-
-// function customizar(){
-//   const corCorpo = document.getElementById('cor-corpo').value;
-//   const formaCorpo = document.getElementById('forma-corpo').value;
-//   const corOlhos = document.getElementById('cor-olhos').value;
-//   const corBoca = document.getElementById('cor-boca').value;
-  
-//   pyodide.runPython(`
-//     agentAPet.color="${corCorpo}"
-//     agentAPet.shape = "${formaCorpo}"
-//     agentAPet.eyeColor="${corOlhos}"
-//     agentAPet.mouthColor="${corBoca}"
-//     `);
-
-//   document.getElementById("customizacao").style.display = "none";   // esconde a div de customização
-  
-//   atualizarInfos();
-// }
 
 function criarAPeteUser() {
   //FUNÇÃO PARA RECUPERAR MEMÓRIA
@@ -100,8 +86,6 @@ function criarAPeteUser() {
       
   agent = pyodide.globals.get("agentAPet")
   user = pyodide.globals.get("user")
-  //document.getElementById("customizacao").style.display = "none";   // esconde a div de customização
-  //document.getElementById("controls").style.display = "block";
   atualizarDesbloqueios(Reflect.get(agent,"level"))
   atualizarInfos();
 
@@ -120,15 +104,17 @@ function loopAPet() {
   //const end = performance.now();
   //console.log(`Execução do passo: ${Math.round(end - start)} ms`);
 
-  //requestAnimationFrame(loopAPet);
+  //requestAnimationFrame(loopAPet); TALVEZ MELHORE A PERFORMANCE
   setTimeout(loopAPet, 5);
 }
 
 function setup() {
-  canvaWidth = Math.min(windowWidth - 10, 600);
+  canvaWidth = Math.min(windowWidth - 50, 580);
   canvaHeight = Math.min(windowHeight/2, 800);
   let canvas = createCanvas(canvaWidth, canvaHeight);
   canvas.parent("simContainer");
+  document.getElementById('simContainer').style.maxWidth = `${canvaWidth + 20}px`
+  document.getElementById('simContainer').style.width = `${canvaWidth + 20}px`
 }
 
 function draw() {
@@ -138,7 +124,8 @@ function draw() {
   if (!agent || agent.length === 0) {
     return;
   }
-drawAPet(agent, canvaWidth/2, canvaHeight/2);
+drawCenario();
+drawAPet(agent);
 }
 
 // function mostrarAvisoReforco() {

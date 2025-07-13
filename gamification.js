@@ -103,24 +103,35 @@ function atualizarDesbloqueios(level) {
 
   if (level == 3) {
     document.getElementById("customizacao").style.display = "block";
-    // document.getElementById("cor-corpo").style.display = "block";
-    // document.getElementById("cor-olhos").style.display = "block";
-    // document.getElementById("cor-boca").style.display = "block";
-    // document.getElementById("forma-corpo").style.display = "block";
+    document.getElementById("exibirIcones").style.display = "block";
+    document.getElementById("iconeCustomizacao").style.display = "block";
     console.log("lvl3")
   }
 
   if (level >= 4) {
     document.getElementById("instrucao").style.display = "flex"
-    //document.getElementById("inputInstrucao").style.display = "block";
-    //document.querySelector("button[onclick='enviarInstrucao()']").style.display = "block";
+    document.getElementById("iconeInstrucao").style.display = "block"
     console.log("nivel 4")
   }
 }
 
 function bloquearTudoInicialmente() {
-  document.getElementById("customizacao").style.display = "none"  
+  document.getElementById("customizacao").style.display = "none" 
+  document.getElementById("exibirIcones").style.display = "none"  
   document.getElementById("instrucao").style.display = "none" 
   document.querySelector("button[onclick='punir()']").style.display = "none" 
   console.log("bloq")
+}
+
+function toggle(div, display){
+  if (document.getElementById(`${div}`).style.display == `${display}`){
+    document.getElementById(`${div}`).style.display = 'none'
+  }else{document.getElementById(`${div}`).style.display = `${display}`}
+
+  if (div === 'icones'){
+    if (document.getElementById('botaoIcones').textContent == '🔼'){
+      document.getElementById('botaoIcones').textContent = '🔽';
+    } else{document.getElementById('botaoIcones').textContent = '🔼'}
+  }
+
 }

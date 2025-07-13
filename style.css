@@ -142,6 +142,7 @@ main {
   gap: 1rem;
   justify-content: space-around;
   flex-wrap: wrap;
+  flex-grow: 1
 }
 
 #instrucao label {

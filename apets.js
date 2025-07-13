@@ -106,3 +106,19 @@ function smoothTriangle(x, y, size) {
   vertex(x + halfSize, y + h / 2); // canto inferior direito
   endShape(CLOSE);
 }
+
+function drawCenario() {
+  // Céu
+  background(135, 206, 235);
+
+  // Chão
+  fill(34, 139, 34);
+  rect(0, height - 100, width, 100);
+
+  // Casinha
+  fill(150, 75, 0);
+  rect(300, height - 180, 100, 80);
+  fill(200, 0, 0);
+  triangle(280, height - 180, 420, height - 180, 350, height - 230);
+}
+

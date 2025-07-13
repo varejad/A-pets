@@ -32,8 +32,14 @@
           <p id="nivel">Nível: <span id="spanNivel"></span></p>
         </div>
       </div>
+
       <div id="simContainer">
         <!-- O canvas será criado e inserido aqui pelo p5.js -->
+      </div>
+
+      <div id="icones" style="display: none; white-space: nowrap; overflow-x: auto;">
+        <p id="iconeCustomizacao" style="font-size: 1.8rem; display: none;" onclick="toggle('customizacao', 'block')">🎨</p>
+        <p id="iconeInstrucao" style="font-size: 1.8rem; display: none;" onclick="toggle('inputInstrucao', 'flex');toggle('botaoInstrucao', 'flex')">🗣️</p>
       </div>
       
       <div id="customizacao" >
@@ -67,19 +73,26 @@
       </div>
 
       <div id="controls">
-        <!-- Entrada de instrução -->
-        <div id="instrucao" >
-          <label for="inputInstrucao" id="labelInputInstrucao">Instrução:</label>
-          <input type="text" id="inputInstrucao" maxlength="50" placeholder="Digite uma instrução...">
-          <button onclick="enviarInstrucao()">Enviar</button>
+          <!-- Entrada de instrução -->
+          <div id="instrucao" >
+            <label for="inputInstrucao" id="labelInputInstrucao">Instrução:</label>
+            <input type="text" id="inputInstrucao" maxlength="50" placeholder="Digite uma instrução...">
+            <button id="botaoInstrucao" onclick="enviarInstrucao()">Enviar</button>
+          </div>
+
+        <div style="display: flex;">
+          <div id="exibirIcones">
+            <p id="botaoIcones" style="font-size: 1.8rem;" onclick="toggle('icones', 'flex')">🔽</p>
+          </div>
+          <!-- botões de reforçamento e punição -->
+          <div id="botoesReP">
+            <!-- tentar fazer usando codigo pyodide sincrono -->
+            <!-- tentar fazer indicando no metodo consequence a quantidade de reforco -->
+            <button id="botaoReforcar" onclick="reforcar()">Recompensa!</button>
+            <button id="botaoPunir" onclick="punir()">Punição!</button>
+          </div>
         </div>
-        <!-- botões de reforçamento e punição -->
-        <div id="botoesReP">
-          <!-- tentar fazer usando codigo pyodide sincrono -->
-          <!-- tentar fazer indicando no metodo consequence a quantidade de reforco -->
-          <button id="botaoReforcar" onclick="reforcar()">Recompensa!</button>
-          <button id="botaoPunir" onclick="punir()">Punição!</button>
-        </div>
+        
       </div>
     </div>
 
