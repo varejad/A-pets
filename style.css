@@ -147,7 +147,17 @@ main {
   margin-top: var(--espacamento);
 }
 
-#instrucao,
+#instrucao{
+  display: flex;
+  margin-bottom: var(--espacamento);
+  gap: 1rem;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+}
+
 #botoesReP {
   display: flex;
   margin-bottom: var(--espacamento);
@@ -179,6 +189,19 @@ main {
   border-radius: var(--raio-borda);
   cursor: pointer;
   margin-right: 0.5rem;
+}
+
+#instrucoesConhecidas{
+  display: flex;
+  white-space: nowrap;
+  overflow-x: auto;
+  gap: 1rem;
+  /* padding: var(--espacamento); */
+  background-color: white;
+  border: 2px solid var(--neutro);
+  border-radius: var(--raio-borda);
+  margin-bottom: 0.25rem;
+  /* min-height: 50px;  */
 }
 
 #botoesReP button:first-child {

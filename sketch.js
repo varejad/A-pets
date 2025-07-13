@@ -50,8 +50,25 @@ user.moedas -= magnitude_de_punicao
 
 function enviarInstrucao() {
   const instrucao = document.getElementById("inputInstrucao").value;
-  pyodide.runPython(`agentAPet.antecedente_atual = ("${instrucao}",)`);
+  pyodide.runPython(`
+agentAPet.antecedente_atual = ("${instrucao}",)
+  `);
+
+  console.log(Reflect.get(agent, 'instrucoes').toJs())
+
+  if (Reflect.get(agent, 'instrucoes').toJs().indexOf(`${instrucao}`) == -1){
+    console.log("não tem na lista")
+    const novoBotao = document.createElement('button');
+    novoBotao.textContent = `${instrucao}`;
+    document.getElementById('instrucoesConhecidas').appendChild(novoBotao);
+    novoBotao.onclick = function() {
+                    document.getElementById('inputInstrucao').value = novoBotao.textContent
+                };
+    pyodide.runPython(`agentAPet.instrucoes.append("${instrucao}")`)
+  } else{console.log("já tem na lista")}
+
   document.getElementById("labelInputInstrucao").textContent = `Instrução atual: ${instrucao}`
+  document.getElementById('instrucoesConhecidas').style.display = 'none';
   document.getElementById("inputInstrucao").style.display = 'none';
   document.getElementById("botaoInstrucao").style.display = 'none';
 }
@@ -83,6 +100,15 @@ function criarAPeteUser() {
   user = pyodide.globals.get("user")
   atualizarDesbloqueios(Reflect.get(agent,"level"))
   atualizarInfos();
+  // CRIA OS BOTÕES COM INSTRUÇÕES JA ENSINADAS
+  Reflect.get(agent, 'instrucoes').toJs().forEach(function(element) {
+    const novoBotao = document.createElement('button');
+    novoBotao.textContent = `${element}`;
+    document.getElementById('instrucoesConhecidas').appendChild(novoBotao);
+    novoBotao.onclick = function() {
+                    document.getElementById('inputInstrucao').value = novoBotao.textContent
+                };
+    });
 
   passoIntervalo = 1000 / pyodide.globals.get("PASSOS_POR_SEGUNDO"); // 20 passos por segundo = 50ms por passo
   loopAPet();

@@ -71,6 +71,7 @@
         <!-- Entrada de instrução -->
         <div id="instrucao" >
             <label for="inputInstrucao" id="labelInputInstrucao">Instrução:</label>
+            <div id="instrucoesConhecidas"></div>
             <input type="text" id="inputInstrucao" maxlength="50" placeholder="Digite uma instrução...">
             <button id="botaoInstrucao" onclick="enviarInstrucao()">Enviar</button>
         </div>
@@ -79,7 +80,7 @@
           <p id="iconeConfig" style="font-size: 1.8rem; display: block;" onclick="toggle('configModalOverlay', 'flex')">⚙️</p>
           <p id="iconeLoja" style="font-size: 1.8rem; display: block;" onclick="alert('Em breve você poderá usar suas moedas para comprar skins, acessórios, brinquedos e mais')">🛒</p>
           <p id="iconeCustomizacao" style="font-size: 1.8rem; display: none;" onclick="toggle('customizacao', 'block')">🎨</p>
-          <p id="iconeInstrucao" style="font-size: 1.8rem; display: none;" onclick="toggle('inputInstrucao', 'flex');toggle('botaoInstrucao', 'flex')">🗣️</p>
+          <p id="iconeInstrucao" style="font-size: 1.8rem; display: none;" onclick="toggle('inputInstrucao', 'flex');toggle('botaoInstrucao', 'flex');toggle('instrucoesConhecidas', 'flex')">🗣️</p>
         </div>
 
         <div style="display: flex;">
@@ -173,7 +174,6 @@ responses = {("pular",):[5,10],
              ("pegar",):[0,1],
              ("esq",):[3,10],
              ("dir",):[3,10],
-             ("entrar",):[0,1],
              ("parado",):[1,10],
              ("girarEsq",):[5,10],
              ("girarDir",):[5,10]}
@@ -198,6 +198,7 @@ class Agents(Aprendente):
         self.consequence = 0
         self.disposicao = 1000
         self.angle = 0
+        self.instrucoes = []
     
     #def set_context(self):
         #context = ("sem contexto",)
@@ -235,12 +236,6 @@ class Agents(Aprendente):
         if self._acao_atual[0] == "girarDir":
           self.angle = (self.angle + (90/PASSOS_POR_ACAO)) % 360
           self.positionX = (self.positionX + (60/PASSOS_POR_ACAO)) % WIDTH
-        
-        if self._acao_atual[0] == "entrar": #NÃO FICOU LEGAL PQ SÓ DIMINUI O CORPO E NÃO DIMINUI O ROSTO
-          if self.passos_restantes > PASSOS_POR_ACAO/2:
-            self.size -= 1
-          else:
-            self.size += 1
     
     def set_consequence(self):
       if self.consequence != 0:
@@ -293,7 +288,6 @@ def simular_em_loop():
   <script src="apets.js"></script>
   
   <!-- 
-  Anúncios 
   Guardar memória local 
   Cenários 
   
@@ -306,8 +300,8 @@ def simular_em_loop():
   Login com Google
   "Esportes"
   Escolher um esporte, de preferência que não precise de objetos
-  Melhorar ação de "entrar"
   spinner no inicio
+  quando clicar e segurar um botão de intrução conhecida ter a opção de excluir da lista
    -->
   
 </body>
