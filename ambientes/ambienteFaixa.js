@@ -7,8 +7,6 @@ let faixaLarguraMinima = 80;
 let faixaTempoTotal = 0;
 let gameOver = false;
 
-console.log(faixa);
-
 function setupFaixa() {
   faixa = {
     y: 0,
@@ -16,6 +14,7 @@ function setupFaixa() {
     largura: faixaLarguraInicial,
     centroX: width / 2
   };
+
   for (let i = 0; i < height; i += 10) {
     faixa.segmentos.push({
       y: i,
@@ -23,8 +22,11 @@ function setupFaixa() {
       largura: faixa.largura
     });
   }
+
   gameOver = false;
   faixaTempoTotal = 0;
+
+  pyodide.runPython(`agentAPet.positionX = ${faixa.centroX}`)
 }
 
 function drawFaixaAmbiente() {
@@ -52,9 +54,9 @@ function drawFaixaAmbiente() {
   }
 
   // Remove segmentos fora da tela e adiciona novos
-  if (faixa.segmentos[0].y > height) {
+  if (faixa.segmentos[faixa.segmentos.length - 1].y > height) {
     faixa.segmentos.shift();
-    faixa.segmentos.push({
+    faixa.segmentos.unshift({
       y: 0,
       centroX:
         faixa.segmentos[faixa.segmentos.length - 1].centroX +
@@ -78,15 +80,15 @@ function drawFaixaAmbiente() {
 //   drawAPet(agent, agent.positionX, height - 60);
 
   // Verifica colisão com a faixa
-  
-  let pos = faixa.segmentos.find((s) =>
-    Math.abs(s.y - (height - 60)) < 10
-  );
-  if (
-    !pos ||
-    agent.positionX < pos.centroX - pos.largura / 2 ||
-    agent.positionX > pos.centroX + pos.largura / 2
-  ) {
-    gameOver = true;
-  }
+  // let pos = faixa.segmentos.find((s) =>
+  //   Math.abs(s.y - (height - 60)) < 10
+  // );
+  // if (
+  //   !pos ||
+  //   agent.positionX < pos.centroX - pos.largura / 2 ||
+  //   agent.positionX > pos.centroX + pos.largura / 2
+  // ) {
+  //   gameOver = true;
+  // }
+  console.log("segmento 0.y: "+faixa.segmentos[0].y + "  altura da tela: " + height + " quantidade faixas: "+faixa.segmentos.length)
 }

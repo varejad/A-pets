@@ -5,7 +5,7 @@ let canvaHeight;
 let tempoUltimoPasso = performance.now();
 let passoIntervalo;
 let gameState = "default";
-let faixaIniciada = false;
+let gameIniciado = false;
 
 /*function preload() {
   skinsData = loadJSON("data/skins.json", () => {
@@ -17,10 +17,11 @@ function reforcar(magnitudeDeReforco=5){
   if (Reflect.get(user, "moedas")>=magnitudeDeReforco){
     pyodide.runPython(`
 magnitude_de_reforco = ${magnitudeDeReforco}
-agentAPet.consequence += magnitude_de_reforco
+agentAPet.consequence += magnitude_de_reforco * 4
 agentAPet.pontucao_xp(magnitude_de_reforco)
 agentAPet.mouthType = "smile"
 user.moedas -= magnitude_de_reforco
+print(agentAPet._antecedentes_e_respostas)
 `)
     esconderAvisoReforco();
   } else{
@@ -35,13 +36,12 @@ async function punir(magnitudeDePunicao=3){
   if (Reflect.get(user, "moedas")>= magnitudeDePunicao){
     pyodide.runPythonAsync(`
 magnitude_de_punicao = ${magnitudeDePunicao}
-if agentAPet.respostas_atuais[agentAPet._acao_atual][1] - magnitude_de_punicao > agentAPet.respostas_atuais[agentAPet._acao_atual][0]:
-  agentAPet.reforcar(-3)
+if agentAPet.respostas_atuais[agentAPet._acao_atual][1] - magnitude_de_punicao*4 > agentAPet.respostas_atuais[agentAPet._acao_atual][0]:
+  agentAPet.reforcar(-magnitude_de_punicao * 5)
 agentAPet.mouthType = "sad"
-agentAPet.xp += 3
+agentAPet.xp += magnitude_de_punicao
 user.moedas -= magnitude_de_punicao
   `);
-  // CRIAR FORMULA PARA CONVERTER XP EM LEVEL
     esconderAvisoReforco();
   } else{
     mostrarAvisoReforco();
@@ -53,10 +53,8 @@ user.moedas -= magnitude_de_punicao
 function enviarInstrucao() {
   const instrucao = document.getElementById("inputInstrucao").value;
   pyodide.runPython(`
-agentAPet.antecedente_atual = ("${instrucao}",)
+agentAPet.instrucao_atual = "${instrucao}"
   `);
-
-  console.log(Reflect.get(agent, 'instrucoes').toJs())
 
   if (Reflect.get(agent, 'instrucoes').toJs().indexOf(`${instrucao}`) == -1){
     console.log("não tem na lista")
@@ -151,12 +149,20 @@ function draw() {
   if (gameState === "default") {
     drawCenario();
   } else if (gameState === "faixa") {
-    if (!faixaIniciada) {
+    if (!gameIniciado) {
       setupFaixa();
-      faixaIniciada = true;
+      gameIniciado = true;
     }
     drawFaixaAmbiente();
+  }else if(gameState === "obstaculo"){
+    if (!gameIniciado) {
+      setupObstaculo();
+      gameIniciado = true;
+    }
+    drawObstaculo();
   }
+
+  
 
 drawAPet(agent);
 }

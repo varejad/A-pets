@@ -81,7 +81,7 @@
           <p id="iconeLoja" style="font-size: 1.8rem; display: block;" onclick="alert('Em breve você poderá usar suas moedas para comprar skins, acessórios, brinquedos e mais')">🛒</p>
           <p id="iconeCustomizacao" style="font-size: 1.8rem; display: none;" onclick="toggle('customizacao', 'block')">🎨</p>
           <p id="iconeInstrucao" style="font-size: 1.8rem; display: none;" onclick="toggle('inputInstrucao', 'flex');toggle('botaoInstrucao', 'flex');toggle('instrucoesConhecidas', 'flex')">🗣️</p>
-          <p id="iconeFaixa" style="font-size: 1.8rem; display: block;" onclick="gameState = 'faixa';">🛣️</p>
+          <p id="iconeFaixa" style="font-size: 1.8rem; display: block;" onclick="gameState = 'obstaculo';">🛣️</p>
           <p id="iconeDefault" style="font-size: 1.8rem; display: block;" onclick="gameState = 'default'; faixaIniciada = false;">🏠</p>
           <!-- COLOCAR ICONES DE FAIXA E CASA COMO DISPLAY: NONE -->
         </div>
@@ -170,7 +170,7 @@ HEIGHT = 400
 
 class User():
     def __init__(self):
-        self.moedas = 100
+        self.moedas = 150
         self.novoJogador = True
 
 responses = {("pular",):[5,10],
@@ -189,6 +189,7 @@ class Agents(Aprendente):
         self.passos_restantes = 0
         self.color = color
         self.name = name
+        self.instrucao_atual = "sem instrução"
         self.antecedente_atual = ("sem contexto",)
         self.shape = shape
         self.eyeColor = eyeColor
@@ -203,9 +204,9 @@ class Agents(Aprendente):
         self.angle = 0
         self.instrucoes = []
     
-    #def set_context(self):
-        #context = ("sem contexto",)
-        #return context
+    def set_context(self):
+        context = (self.instrucao_atual, self._acao_atual)
+        return context
     
     def pontucao_xp(self, pontos):
         self.xp += pontos
@@ -251,8 +252,8 @@ def simular_em_loop():
       agentAPet.consequence = 0
       # INICIA NOVO CICLO DE COMPORTAMENTO ABAIXO
       agentAPet.mouthType = "flat"
-      #context = agentAPet.set_context()
-      agentAPet.proxima_acao(agentAPet.antecedente_atual)
+      context = agentAPet.set_context()
+      agentAPet.proxima_acao(context)
       agentAPet.passos_restantes = PASSOS_POR_ACAO 
 
   agentAPet.to_respond(agentAPet.antecedente_atual)
@@ -290,11 +291,13 @@ def simular_em_loop():
   <script src="gamification.js"></script>
   <script src="apets.js"></script>
   <script src="ambientes/ambienteFaixa.js"></script>
+  <script src="ambientes/obstaculos.js"></script>
   
   <!-- 
   Guardar memória local 
   Cenários 
   
+  antecedente considerando a ultima ação
   Tradução do tutorial
   tradução das mensagens de passar o Nível
   tradução de botões textos etc 
