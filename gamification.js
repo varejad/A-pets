@@ -1,3 +1,15 @@
+let gameState = "default";
+let gameIniciado = false;
+
+function voltarADefault(){
+  gameState = "default";
+  gameIniciado = false;
+  pyodide.runPython(`
+  agentAPet.positionX = ${width / 2}
+  agentAPet.positionY = ${height - height/3}
+  `)
+}
+
 function customizar(){
   const corCorpo = document.getElementById('cor-corpo').value;
   const formaCorpo = document.getElementById('forma-corpo').value;
@@ -43,14 +55,16 @@ function mostrarAvisoLevel() {
     1: "🎉 PARABÉNS! Seu A-Pet chegou ao NÍVEL 1<br><br> Você desbloqueou o botão de punição, use esse botão quando seu A-Pet fizer algo que você não quer que ele faça mais!",
     2: "🎉 PARABÉNS! Seu A-Pet chegou ao NÍVEL 2<br><br>Agora você pode escolher o nome do seu A-pet!",
     3: "🎉 PARABÉNS! Seu A-Pet chegou ao NÍVEL 3<br><br> Agora chegou a hora de customizar seu A-Pet do jeito que quiser",
-    4: "🎉 PARABÉNS! Seu A-Pet chegou ao NÍVEL 4<br><br> Agora você pode dar instruções ao seu A-pet!"
+    4: "🎉 PARABÉNS! Seu A-Pet chegou ao NÍVEL 4<br><br> Agora você pode dar instruções ao seu A-pet!",
+    5: "🎉 PARABÉNS! Seu A-Pet chegou ao NÍVEL 5<br><br> Você liberou o primeiro mini-game para jogar com seu A-pet!"
   };
 
   const proximo = {
     1: "No próximo nível você poderá dar um nome ao seu A-pet.",
     2: "No próximo nível você poderá customizar seu A-pet do seu jeito!",
     3: "Próximo nível: desbloqueia instruções.",
-    4: "Você desbloqueou tudo por enquanto! Fique de olho nas novidades 🎉"
+    4: "No próximo nível você poderá colocar seu A-pet no seu primeiro mini-game!! 🎉",
+    5: "Você desbloqueou todas as funções até o momento, fique ligado para o lançamento de novidades!"
   };
 
   document.getElementById("mensagemNivel").innerHTML = `
@@ -115,8 +129,9 @@ function atualizarDesbloqueios(level) {
   }
 
   if (level >= 5){
-    document.getElementById("iconeFaixa").style.display = "block"
+    document.getElementById("iconeObstaculo").style.display = "block"
     document.getElementById("iconeDefault").style.display = "block"
+    console.log("nivel 5")
   }
 }
 

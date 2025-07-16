@@ -81,9 +81,8 @@
           <p id="iconeLoja" style="font-size: 1.8rem; display: block;" onclick="alert('Em breve você poderá usar suas moedas para comprar skins, acessórios, brinquedos e mais')">🛒</p>
           <p id="iconeCustomizacao" style="font-size: 1.8rem; display: none;" onclick="toggle('customizacao', 'block')">🎨</p>
           <p id="iconeInstrucao" style="font-size: 1.8rem; display: none;" onclick="toggle('inputInstrucao', 'flex');toggle('botaoInstrucao', 'flex');toggle('instrucoesConhecidas', 'flex')">🗣️</p>
-          <p id="iconeFaixa" style="font-size: 1.8rem; display: block;" onclick="gameState = 'obstaculo';">🛣️</p>
-          <p id="iconeDefault" style="font-size: 1.8rem; display: block;" onclick="gameState = 'default'; faixaIniciada = false;">🏠</p>
-          <!-- COLOCAR ICONES DE FAIXA E CASA COMO DISPLAY: NONE -->
+          <p id="iconeObstaculo" style="font-size: 1.8rem; display: none;" onclick="gameState = 'obstaculo';">🚧</p>
+          <p id="iconeDefault" style="font-size: 1.8rem; display: none;" onclick="voltarADefault();">🏠</p>
         </div>
 
         <div style="display: flex;">
@@ -295,18 +294,13 @@ def simular_em_loop():
   
   <!-- 
   Guardar memória local 
-  Cenários 
   
-  antecedente considerando a ultima ação
+  antecedente considerando a ultima ação (está assim agora) // testar opção de variação de resposta para ter comportamentos em sequencia, ao inves do jeito q ta agr
   Tradução do tutorial
   tradução das mensagens de passar o Nível
   tradução de botões textos etc 
-  Anuncios
   Disposição
-  Ambientes diferentes 
   Login com Google
-  "Esportes"
-  Escolher um esporte, de preferência que não precise de objetos
   spinner no inicio
   quando clicar e segurar um botão de intrução conhecida ter a opção de excluir da lista
    -->

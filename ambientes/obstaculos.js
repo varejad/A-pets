@@ -12,25 +12,25 @@ let gameOverObs = false;
 
 
 function setupObstaculo(){
-    listaObstaculos = [];
-    larguraInicial = width/6
-    tamanhoMaxObs = width/2
-    //BOTAR VARIÁVEIS INICIAIS AQUI
+  console.log("setupObs")
+  listaObstaculos = [];
+  larguraInicial = width/6
+  tamanhoMaxObs = width/2
+  gameOverObs = false;
+  tempoTotalObs = 0;
+  //BOTAR VARIÁVEIS INICIAIS AQUI
+  
     geradorDeObstaculos = {
-        y: 10,
-        x: width / 2,
-        largura: larguraInicial,
-        altura: alturaInicial,
-    }
+    y: -20,
+    x: width / 2,
+    largura: larguraInicial,
+    altura: alturaInicial,
+  }
 
-    gameOverObs = false;
-    tempoTotalObs = 0;
-
-    pyodide.runPython(`
-    agentAPet.positionX = ${width / 2}
-    #agentAPet.positionY = ${height - height/5}
-        `)
-
+  pyodide.runPython(`
+  agentAPet.positionX = ${width / 2}
+  agentAPet.positionY = ${height - height/5}
+  `)
 }
 
 function drawObstaculo(){
@@ -38,7 +38,7 @@ function drawObstaculo(){
     fill("#c00");
     textAlign(CENTER, CENTER);
     textSize(24);
-    text("Fim de Jogo!", width / 2, height / 2);
+    text(`Fim de Jogo!\nSeu tempo foi ${tempoTotalObs.toFixed(1)} segundos`, width / 2, height / 2);
     return;
   }
   
@@ -71,30 +71,30 @@ function drawObstaculo(){
   let petSize = Reflect.get(agent, "size"); // Assumindo que o A-pet tem um tamanho
 
   for (let obs of listaObstaculos) {
-  // Lógica de colisão simples (retângulo com retângulo)
-  // Você precisará ajustar os offsets se o A-pet for desenhado pelo centro
-  let petLeft = petX - petSize / 2;
-  let petRight = petX + petSize / 2;
-  let petTop = petY - petSize / 2;
-  let petBottom = petY + petSize / 2;
+    // Lógica de colisão simples (retângulo com retângulo)
+    // Você precisará ajustar os offsets se o A-pet for desenhado pelo centro
+    let petLeft = petX - petSize / 2;
+    let petRight = petX + petSize / 2;
+    let petTop = petY - petSize / 2;
+    let petBottom = petY + petSize / 2;
 
-  let obsLeft = obs.x;
-  let obsRight = obs.x + obs.largura;
-  let obsTop = obs.y;
-  let obsBottom = obs.y + obs.altura;
+    let obsLeft = obs.x;
+    let obsRight = obs.x + obs.largura;
+    let obsTop = obs.y;
+    let obsBottom = obs.y + obs.altura;
 
-  if (
-    petRight > obsLeft &&
-    petLeft < obsRight &&
-    petBottom > obsTop &&
-    petTop < obsBottom
-    ) {
-    gameOverObs = true;
-    console.log("COLISÃO!");
-    console.log(tempoTotalObs)
-    break; // Sai do loop assim que uma colisão é detectada
+    if (
+      petRight > obsLeft &&
+      petLeft < obsRight &&
+      petBottom > obsTop &&
+      petTop < obsBottom
+      ) {
+      gameOverObs = true;
+      console.log("COLISÃO!");
+      console.log(tempoTotalObs)
+      break; // Sai do loop assim que uma colisão é detectada
     }
-}
+  }
 
   //desenhar obstaculo
   noStroke();

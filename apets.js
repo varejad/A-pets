@@ -113,12 +113,12 @@ function drawCenario() {
 
   // Chão
   fill(34, 139, 34);
-  rect(0, height - 100, width, 100);
+  rect(0, height - height/3, width, height/3);
 
   // Casinha
   fill(150, 75, 0);
-  rect(300, height - 180, 100, 80);
+  rect(width - width/3, height - height/3 - 50, 70, 50);
   fill(200, 0, 0);
-  triangle(280, height - 180, 420, height - 180, 350, height - 230);
+  triangle(width - width/3 - 20, height - height/3 - 50, width - width/3 + 70 +20, height - height/3 - 50, width - width/3 + 35, height - height/3 - 100);
 }
 

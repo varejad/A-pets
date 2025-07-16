@@ -4,8 +4,6 @@ let canvaWidth;
 let canvaHeight;
 let tempoUltimoPasso = performance.now();
 let passoIntervalo;
-let gameState = "default";
-let gameIniciado = false;
 
 /*function preload() {
   skinsData = loadJSON("data/skins.json", () => {
