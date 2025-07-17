@@ -110,7 +110,7 @@
         <p style="margin-bottom: 1em;">⚠️ Você não tem moedas suficientes!</p>
         <button onclick="ganharReforcadores()">Ganhar mais</button>
         <br><br>
-        <button onclick="esconderAvisoReforco()">Fechar</button>
+        <button onclick="toggle('avisoReforcoOverlay', 'flex')">Fechar</button>
       </div>
     </div>
 
@@ -176,7 +176,7 @@ responses = {("pular",):[5,10],
              ("pegar",):[0,1],
              ("esq",):[3,10],
              ("dir",):[3,10],
-             ("parado",):[1,10],
+             ("parado",):[0,10],
              ("girarEsq",):[5,10],
              ("girarDir",):[5,10]}
 
@@ -272,7 +272,7 @@ def simular_em_loop():
       document.getElementById("loading").style.display = "none";
       document.getElementById("main").style.display = "block";
       bloquearTudoInicialmente()
-      criarAPeteUser();
+      criarAPetEUser();
 
       // Mostrar tutorial automaticamente na primeira vez, depois do pyodide carregar
       if (!localStorage.getItem("tutorialVisto")) {

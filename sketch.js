@@ -21,13 +21,12 @@ agentAPet.mouthType = "smile"
 user.moedas -= magnitude_de_reforco
 print(agentAPet._antecedentes_e_respostas)
 `)
-    esconderAvisoReforco();
+    //esconderAvisoReforco();
   } else{
-    mostrarAvisoReforco();
+    toggle("avisoReforcoOverlay", "flex")
+    //mostrarAvisoReforco();
   }
   atualizarInfos();
-
-  // CRIAR FORMULA PARA CONVERTER XP EM LEVEL
 }
 
 async function punir(magnitudeDePunicao=3){
@@ -40,9 +39,11 @@ agentAPet.mouthType = "sad"
 agentAPet.xp += magnitude_de_punicao
 user.moedas -= magnitude_de_punicao
   `);
-    esconderAvisoReforco();
+    //esconderAvisoReforco();
+    //toggle("avisoReforcoOverlay", "flex")
   } else{
-    mostrarAvisoReforco();
+    //mostrarAvisoReforco();
+    toggle("avisoReforcoOverlay", "flex")
   }
   atualizarInfos();
 
@@ -54,7 +55,7 @@ function enviarInstrucao() {
 agentAPet.instrucao_atual = "${instrucao}"
   `);
 
-  if (Reflect.get(agent, 'instrucoes').toJs().indexOf(`${instrucao}`) == -1){
+  if (Reflect.get(agent, 'instrucoes').toJs().indexOf(`${instrucao}`) == -1){ //verifica se a instrução dada já foi dada antes, caso n, adiciona na lista
     console.log("não tem na lista")
     const novoBotao = document.createElement('button');
     novoBotao.textContent = `${instrucao}`;
@@ -71,7 +72,7 @@ agentAPet.instrucao_atual = "${instrucao}"
   document.getElementById("botaoInstrucao").style.display = 'none';
 }
 
-function criarAPeteUser() {
+function criarAPetEUser() {
   //FUNÇÃO PARA RECUPERAR MEMÓRIA
 
   const corCorpo = document.getElementById('cor-corpo').value;
@@ -123,8 +124,8 @@ function loopAPet() {
   //const end = performance.now();
   //console.log(`Execução do passo: ${Math.round(end - start)} ms`);
 
-  //requestAnimationFrame(loopAPet); TALVEZ MELHORE A PERFORMANCE
-  setTimeout(loopAPet, 5);
+  requestAnimationFrame(loopAPet); // TALVEZ MELHORE A PERFORMANCE
+  //setTimeout(loopAPet, 5);
 }
 
 function setup() {

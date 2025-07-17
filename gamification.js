@@ -28,18 +28,19 @@ function customizar(){
   atualizarInfos();
 }
 
-function mostrarAvisoReforco() {
-  document.getElementById("avisoReforcoOverlay").style.display = "flex";
-}
+// function mostrarAvisoReforco() {
+//   document.getElementById("avisoReforcoOverlay").style.display = "flex";
+// }
 
-function esconderAvisoReforco() {
-  document.getElementById("avisoReforcoOverlay").style.display = "none";
-}
+// function esconderAvisoReforco() {
+//   document.getElementById("avisoReforcoOverlay").style.display = "none";
+// }
 
 function ganharReforcadores() {
   //RODAR ANUNCIO AQUI
   pyodide.runPython(`user.moedas += 100`);
-  esconderAvisoReforco();
+  //esconderAvisoReforco();
+  toggle("avisoReforcoOverlay", "flex")
   atualizarInfos();
 }
 
@@ -162,4 +163,31 @@ function resetarAPet() {
   if (confirm("Tem certeza que deseja resetar seu A-pet?")) {
     location.reload(); // Simples por enquanto, reinicia tudo
   }
+}
+
+function salvarEstadoDoJogo() {
+    // Coleta os dados que você quer salvar do agentAPet (objeto Python)
+    const agentData = {
+        name: Reflect.get(agent, "name"),
+        xp: Reflect.get(agent, "xp"),
+        level: Reflect.get(agent, "level"),
+        color: Reflect.get(agent, "color"),
+        shape: Reflect.get(agent, "shape"),
+        eyeColor: Reflect.get(agent, "eyeColor"),
+        mouthColor: Reflect.get(agent, "mouthColor"),
+        instrucoes: Reflect.get(agent, "instrucoes").toJs(), // Converte a lista Python para array JS
+        // Adicione outras propriedades do A-pet que você quer salvar
+    };
+
+    // Coleta os dados do user (objeto Python)
+    const userData = {
+        moedas: Reflect.get(user, "moedas"),
+        // Adicione outras propriedades do usuário
+    };
+
+    // Salva no localStorage como strings JSON
+    localStorage.setItem("aPetData", JSON.stringify(agentData));
+    localStorage.setItem("userData", JSON.stringify(userData));
+
+    console.log("Estado do jogo salvo!");
 }

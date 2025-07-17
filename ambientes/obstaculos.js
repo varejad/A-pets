@@ -38,7 +38,7 @@ function drawObstaculo(){
     fill("#c00");
     textAlign(CENTER, CENTER);
     textSize(24);
-    text(`Fim de Jogo!\nSeu tempo foi ${tempoTotalObs.toFixed(1)} segundos`, width / 2, height / 2);
+    text(`Fim de Jogo!\nSeu tempo foi ${tempoTotalObs.toFixed(1)} segundos\nVocê ganhou ${tempoTotalObs.toFixed(0)*2} moedas\ne seu a-pet ganhou ${tempoTotalObs.toFixed(0)*2} de experiência!!`, width / 2, height / 2);  
     return;
   }
   
@@ -90,8 +90,11 @@ function drawObstaculo(){
       petTop < obsBottom
       ) {
       gameOverObs = true;
-      console.log("COLISÃO!");
-      console.log(tempoTotalObs)
+      pyodide.runPython(`
+      agentAPet.xp += ${tempoTotalObs.toFixed(0)*2}
+      user.moedas += ${tempoTotalObs.toFixed(0)*2}
+      `)
+      atualizarInfos();
       break; // Sai do loop assim que uma colisão é detectada
     }
   }
