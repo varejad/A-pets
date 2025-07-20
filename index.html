@@ -164,8 +164,8 @@ PASSOS_POR_SEGUNDO = 30
 DURACAO_ACAO_SEGUNDOS = 1
 PASSOS_POR_ACAO = int(PASSOS_POR_SEGUNDO * DURACAO_ACAO_SEGUNDOS)
 
-WIDTH = 400
-HEIGHT = 400
+WIDTH = 0
+HEIGHT = 0
 
 class User():
     def __init__(self):
@@ -259,6 +259,9 @@ def simular_em_loop():
 
   #diminue um passo
   agentAPet.passos_restantes -= 1
+
+def converter_para_string():
+  pass
         `;
         await pyodide.runPythonAsync(code);
 
@@ -303,6 +306,7 @@ def simular_em_loop():
   Login com Google
   spinner no inicio
   quando clicar e segurar um botão de intrução conhecida ter a opção de excluir da lista
+  função para apagar conhecimento não usado pelo a-pet e economizar memória
    -->
   
 </body>

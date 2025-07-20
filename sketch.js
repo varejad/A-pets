@@ -5,11 +5,11 @@ let canvaHeight;
 let tempoUltimoPasso = performance.now();
 let passoIntervalo;
 
-/*function preload() {
-  skinsData = loadJSON("data/skins.json", () => {
-    preloadAccessories(skinsData); 
-  });
-}*/
+// function preload() {
+//   skinsData = loadJSON("data/skins.json", () => {
+//     preloadAccessories(skinsData); 
+//   });
+// }
 
 function reforcar(magnitudeDeReforco=5){
   if (Reflect.get(user, "moedas")>=magnitudeDeReforco){
@@ -49,6 +49,7 @@ user.moedas -= magnitude_de_punicao
 
 }
 
+// VER O TRATAMENTO DO INPUT DE INSTRUÇÃO (TIRAR ESPAÇOS)
 function enviarInstrucao() {
   const instrucao = document.getElementById("inputInstrucao").value;
   pyodide.runPython(`
@@ -73,8 +74,6 @@ agentAPet.instrucao_atual = "${instrucao}"
 }
 
 function criarAPetEUser() {
-  //FUNÇÃO PARA RECUPERAR MEMÓRIA
-
   const corCorpo = document.getElementById('cor-corpo').value;
   const formaCorpo = document.getElementById('forma-corpo').value;
   const corOlhos = document.getElementById('cor-olhos').value;
@@ -83,7 +82,44 @@ function criarAPetEUser() {
   pyodide.globals.set("WIDTH", canvaWidth); // atualiza variáveis python
   pyodide.globals.set("HEIGHT", canvaHeight);
 
-  pyodide.runPython(`
+  // Tenta carregar dados salvos
+  const savedAPetData = localStorage.getItem("aPetData");
+  const savedUserData = localStorage.getItem("userData");
+
+  let initialAgentPythonCode = "";
+  let initialUserPythonCode = "";
+
+  if (savedAPetData && savedUserData) {
+      console.log("Carregando estado do jogo salvo...");
+      const agentData = JSON.parse(savedAPetData);
+      const userData = JSON.parse(savedUserData);
+
+      // Constrói o código Python para inicializar o A-pet com os dados salvos
+      initialAgentPythonCode = `
+        agentAPet = Agents(responses,
+                           prob_variacao=0.0,
+                           positionX= WIDTH/2,
+                           positionY= HEIGHT - (HEIGHT/3),
+                           color="${agentData.color}",
+                           name="${agentData.name}",
+                           shape = "${agentData.shape}",
+                           eyeColor="${agentData.eyeColor}",
+                           mouthColor="${agentData.mouthColor}")
+        agentAPet.xp = ${agentData.xp}
+        agentAPet.level = ${agentData.level}
+        agentAPet.instrucoes = ${JSON.stringify(agentData.instrucoes).replace(/"/g, "'")} # Converta array JS para lista Python
+        # agentAPet._antecedentes_e_respostas = ${JSON.stringify(agentData.aprendizado).replace(/"/g, "'")}
+        agentAPet._antecedentes_e_respostas = ${agentData.aprendizado}
+      `;
+      // Inicializa o usuário com os dados salvos
+      initialUserPythonCode = `user = User()\nuser.moedas = ${userData.moedas}`;
+
+      // Define o nome na UI imediatamente se existir
+      document.getElementById("nomeAPet").innerHTML = `<b>${agentData.name || "A-pet sem nome"} </b><span id="spanNomeAPet"></span>`;
+
+  } else {
+      console.log("Nenhum estado salvo encontrado. Iniciando novo jogo.");
+      initialAgentPythonCode = `
     agentAPet = Agents(responses, 
                        prob_variacao=0.0, 
                        positionX= WIDTH/2, 
@@ -93,7 +129,13 @@ function criarAPetEUser() {
                        shape = "${formaCorpo}", 
                        eyeColor="${corOlhos}", 
                        mouthColor="${corBoca}")
-    user = User()`);
+    `
+    initialUserPythonCode = `user = User()`
+  }
+
+  pyodide.runPython(initialAgentPythonCode);
+  pyodide.runPython(initialUserPythonCode);
+
       
   agent = pyodide.globals.get("agentAPet")
   user = pyodide.globals.get("user")

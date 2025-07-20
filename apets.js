@@ -14,7 +14,6 @@ function drawAPet(petData) {
   rotate(radians(petData.angle)); // Rotaciona o canvas em torno do ponto (x, y)
 
   // Desenhar corpo
-  noStroke();
   fill(petData.color || "#cccccc");
 
   const size = petData.size;
@@ -55,6 +54,7 @@ function drawAPet(petData) {
 
 // Desenha olhos simples
 function drawEyes(petData) {
+  noStroke();
   fill(petData.eyeColor || "#cccccc");
 
   type = petData.eyesType || "round";

@@ -49,6 +49,8 @@ function atualizarInfos(){
   document.getElementById("spanXp").textContent = `${Reflect.get(agent, "xp")}`
   document.getElementById("spanNivel").textContent = `${Reflect.get(agent, "level")}`
 
+  salvarEstadoDoJogo();
+
 }
 
 function mostrarAvisoLevel() {
@@ -116,9 +118,9 @@ function atualizarDesbloqueios(level) {
     console.log("lvl2")
   }
 
-  if (level == 3) {
+  if (level >= 3) {
     document.getElementById("customizacao").style.display = "block";
-    document.getElementById("exibirIcones").style.display = "block";
+    //document.getElementById("exibirIcones").style.display = "block";
     document.getElementById("iconeCustomizacao").style.display = "block";
     console.log("lvl3")
   }
@@ -161,33 +163,45 @@ function alternarIdioma() {
 
 function resetarAPet() {
   if (confirm("Tem certeza que deseja resetar seu A-pet?")) {
-    location.reload(); // Simples por enquanto, reinicia tudo
+    localStorage.removeItem("aPetData"); // Remove os dados do A-pet
+    localStorage.removeItem("userData"); // Remove os dados do usuário
+    location.reload(); // Recarrega a página para reiniciar
   }
 }
 
 function salvarEstadoDoJogo() {
-    // Coleta os dados que você quer salvar do agentAPet (objeto Python)
-    const agentData = {
-        name: Reflect.get(agent, "name"),
-        xp: Reflect.get(agent, "xp"),
-        level: Reflect.get(agent, "level"),
-        color: Reflect.get(agent, "color"),
-        shape: Reflect.get(agent, "shape"),
-        eyeColor: Reflect.get(agent, "eyeColor"),
-        mouthColor: Reflect.get(agent, "mouthColor"),
-        instrucoes: Reflect.get(agent, "instrucoes").toJs(), // Converte a lista Python para array JS
-        // Adicione outras propriedades do A-pet que você quer salvar
-    };
 
-    // Coleta os dados do user (objeto Python)
-    const userData = {
-        moedas: Reflect.get(user, "moedas"),
-        // Adicione outras propriedades do usuário
-    };
+  // tentar converter tudo para string no python
 
-    // Salva no localStorage como strings JSON
-    localStorage.setItem("aPetData", JSON.stringify(agentData));
-    localStorage.setItem("userData", JSON.stringify(userData));
+  //console.log(JSON.stringify(Reflect.get(agent, "_antecedentes_e_respostas")) + "primeira tentaiva")
+  //console.log(Reflect.get(agent, "_antecedentes_e_respostas").toString() + " segunda")
+  console.log(Reflect.get(agent))
+  console.log("teste salvar estado")
 
-    console.log("Estado do jogo salvo!");
+  // Coleta os dados que você quer salvar do agentAPet (objeto Python)
+  const agentData = {
+    name: Reflect.get(agent, "name"),
+    xp: Reflect.get(agent, "xp"),
+    level: Reflect.get(agent, "level"),
+    color: Reflect.get(agent, "color"),
+    shape: Reflect.get(agent, "shape"),
+    eyeColor: Reflect.get(agent, "eyeColor"),
+    mouthColor: Reflect.get(agent, "mouthColor"),
+    instrucoes: Reflect.get(agent, "instrucoes").toJs(), // Converte a lista Python para array JS
+    aprendizado: Reflect.get(agent, "_antecedentes_e_respostas").toString(),
+  };
+
+  // Coleta os dados do user (objeto Python)
+  const userData = {
+    moedas: Reflect.get(user, "moedas"),
+    // Adicione outras propriedades do usuário
+  };
+
+  // Salva no localStorage como strings JSON
+  localStorage.setItem("aPetData", JSON.stringify(agentData));
+  localStorage.setItem("userData", JSON.stringify(userData));
+
+  //console.log(agentData +"\n\n\n"+ JSON.stringify(agentData));
+
+  //console.log("Estado do jogo salvo!");
 }
